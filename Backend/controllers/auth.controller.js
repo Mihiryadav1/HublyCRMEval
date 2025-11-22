@@ -6,12 +6,23 @@ import User from "../models/users.model.js";
 export const signup = async (req, res) => {
     try {
         const { name, email, password } = req.body;
-
+        let role
         // Check if admin  already exists
         const existingAdmin = await User.findOne({ role: "admin" });
 
-        //Decide the role
-        const role = existingAdmin ? "user" : "admin"
+        //Decide first user as admin
+        if (!existingAdmin) {
+            role = "admin"
+        }
+        else {
+            //only admin can create additional users
+            if (!req.user || req.user.role !== "admin") {
+                return res.status(403).json({
+                    message: "Only admin can create team members."
+                });
+            }
+            role = "user"
+        }
 
         //Hash password  
         const hashedPassword = await bcrypt.hash(password, 10);

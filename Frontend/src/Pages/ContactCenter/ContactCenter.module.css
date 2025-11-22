@@ -1,22 +1,59 @@
 .contactcenter-container {
     display: grid;
-    background-color: red;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 0.5fr 1fr 0.5fr;
 }
 
 .chats-container {
     height: 100vh;
-    background-color: red;
+    padding: 0.8rem;
+    background-color: rgba(242, 242, 242, 0.937);
+    border-right: 1px solid var(--secondary-gray);
 }
 
 .chatbox {
     height: 100vh;
-    background-color: green;
+    position: relative;
+
+    & .header {
+        background-color: white;
+        padding: 1rem;
+        border-bottom: 1px solid var(--secondary-gray);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    & .input {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        width: 100%;
+        display: flex;
+
+        & input {
+            width: 85%;
+            height: 5rem;
+            font-size: 1rem;
+            border-radius: 0 !important;
+            border: 1px solid var(--secondary-gray);
+            border-right: 0;
+        }
+
+        & button {
+            border: none;
+            width: 10%;
+            border: 1px solid var(--secondary-gray);
+            border-left: 0;
+        }
+
+    }
 }
 
 .ticket-assign {
+    border-left: 1px solid var(--secondary-gray);
     height: 100vh;
-    background-color: red;
+    background-color: rgba(242, 242, 242, 0.937);
+    padding: 0.8rem;
 }
 
 .ticketItem {
@@ -36,4 +73,154 @@
 .active {
     border-radius: 2rem;
     background-color: var(--secondary-gray);
+}
+
+.active-ticketDetails {
+    padding: 10px;
+    margin: 0.3rem 0;
+    border-radius: 0.6rem;
+    border: 1px solid var(--secondary-gray);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+
+
+    & .detail {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+}
+
+.assignDropdown,
+.statusDropDown {
+    width: 100%
+}
+
+
+
+.active-ticketDetails,
+.assignDropdown,
+.statusDropDown {
+    padding: 10px;
+    margin-bottom: 0.3rem;
+    border-radius: 0.6rem;
+    border: 1px solid var(--secondary-gray);
+
+}
+
+.icon {
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.assignDropdown option {
+    border: 1px solid var(--secondary-gray);
+    border-radius: 10px;
+}
+
+.messagesContainer {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 80%;
+}
+
+.messageRow {
+    display: flex;
+    margin: 8px 0;
+}
+
+.mine {
+    justify-content: flex-end;
+}
+
+.theirs {
+    justify-content: flex-start;
+}
+
+.messageBubble {
+    max-width: 60%;
+    padding: 10px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.4;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.mine .messageBubble {
+    text-align: right;
+    /* light green for sent */
+}
+
+.theirs .messageBubble {
+    /* light gray for received */
+    text-align: left;
+}
+
+.chat-disabled {
+    font-size: 1rem;
+    text-align: center;
+}
+
+.messageText {
+    margin: 0;
+}
+
+.messageTime {
+    font-size: 11px;
+    color: #666;
+    display: block;
+    margin-top: 4px;
+}
+
+
+/* Modal Popup CSS */
+.popupOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.popupBox {
+    background: #fff;
+    padding: 20px 25px;
+    width: 320px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.popupButtons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.popupButtons button {
+    padding: 10px 16px;
+    border: none;
+    background: #3A7ABD;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.popupButtons button:last-child {
+    background: #aaa;
 }

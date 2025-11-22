@@ -30,10 +30,11 @@ const SignIn = () => {
                         password: formData.password
                     }
                 ).then(res => {
-                    // console.log(res.data.user.role);
+                    console.log(res.data.user, "Data");
                     toast("Logged in successfully!", { type: "success" });
                     sessionStorage.setItem("token", res.data.token);
                     sessionStorage.setItem("role", res.data.user.role)
+                    sessionStorage.setItem("userId", res.data.user._id)
                 })
                 //Navigate to dashboard after login
                 navigate('/app');

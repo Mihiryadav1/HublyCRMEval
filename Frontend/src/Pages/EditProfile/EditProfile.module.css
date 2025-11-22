@@ -1,0 +1,35 @@
+ input[type="text"],
+ input[type="password"],
+ input[type="email"] {
+     width: 100%;
+     margin-bottom: 1rem;
+     outline: none;
+     border: 1px solid var(--secondary-gray);
+ }
+
+ .form {
+     max-width: 95%;
+     padding: 2rem;
+
+     & p {
+         margin-bottom: 1rem;
+         border-bottom: 1px solid var(--secondary-gray);
+     }
+ }
+
+ .formWrapper {
+     max-width: 40%;
+
+ }
+
+ .submit-btn {
+     padding: 0.6rem 3rem;
+     border-radius: 0.2rem;
+     border: 0;
+     transition: background-color 0.2s linear;
+ }
+
+ .submit-btn:hover {
+     background-color: var(--primary-btn);
+     color: white;
+ }

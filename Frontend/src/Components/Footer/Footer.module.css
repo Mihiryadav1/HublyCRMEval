@@ -1,0 +1,85 @@
+.footer {
+    background-color: #f8f9fa;
+    padding: 40px;
+    font-family: sans-serif;
+    border-top: 1px solid #ddd;
+}
+
+.footer-columns {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.footer-column {
+    flex: 1 1 180px;
+    margin: 10px;
+}
+
+.footer-column h4 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column li {
+    margin-bottom: 8px;
+}
+
+.footer-column a {
+    text-decoration: none;
+    color: #555;
+    transition: color 0.2s ease;
+}
+
+.footer-column a:hover {
+    color: #000;
+}
+
+.footer-social {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+}
+
+.footer-social a {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    background-size: cover;
+}
+
+/* Placeholder icons — replace with actual SVGs or images */
+.icon-email {
+    background-image: url('/icons/email.svg');
+}
+
+.icon-linkedin {
+    background-image: url('/icons/linkedin.svg');
+}
+
+.icon-twitter {
+    background-image: url('/icons/twitter.svg');
+}
+
+.icon-youtube {
+    background-image: url('/icons/youtube.svg');
+}
+
+.icon-discord {
+    background-image: url('/icons/discord.svg');
+}
+
+.icon-github {
+    background-image: url('/icons/github.svg');
+}
+
+.icon-instagram {
+    background-image: url('/icons/instagram.svg');
+}

@@ -3,7 +3,7 @@
  :root {
    --primary-btn: #244779;
    --primary: #244779;
-   --secondary-gray: #a6a6a6;
+   --secondary-gray: #c7c5c5;
    --sky-blue: #3A7ABD;
    --text-color: #30404D;
    --white: #fff;
@@ -54,4 +54,3 @@
    width: 16px;
    height: 16px;
  }
- 

@@ -51,12 +51,14 @@ export const createTicket = async (req, res) => {
 export const getAllTickets = async (req, res) => {
     try {
 
+
         //Query filters
         const { status, assignedTo, ticketId } = req.query;
         const filter = {};
-        // if (req.user.role !== "admin") {
-        //     filter.userId = req.user.userId;
-        // }
+        //only assigned tickets must be visible to users
+        if (req.user.role !== "admin") {
+            filter.assignedTo = req.user.userId;
+        }
 
         if (status) filter.status = status;
         if (assignedTo) filter.assignedTo = assignedTo;
@@ -83,10 +85,14 @@ export const getAllTickets = async (req, res) => {
 //Get Ticket by ID
 export const getTicketById = async (req, res) => {
     try {
-        const { id } = req.params;
-        const ticket = await Ticket.find({ _id: id })
+        const id = req.params.ticketId;
+        const ticket = await Ticket.findOne({ _id: id })
             .populate("assignedTo", "name email role")
             .sort({ createdAt: -1 });
+
+        if (!ticket) {
+            return res.status(404).json({ message: "Ticket not found" });
+        }
 
         res.status(200).json({
             message: "Tickets fetched successfully",
@@ -151,6 +157,7 @@ export const assignTicket = async (req, res) => {
         }
         ticket.assignedTo = assignedTo;
         await ticket.save();
+        console.log("Ticket Assigned")
         res.status(200).json({
             message: "Ticket assigned successfully",
             ticket,

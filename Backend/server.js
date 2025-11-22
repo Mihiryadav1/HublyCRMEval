@@ -6,6 +6,7 @@ import authRoutes from './routes/auth.routes.js'
 import teamRoutes from './routes/team.routes.js'
 import ticketRoutes from './routes/ticket.route.js'
 import messageRoutes from './routes/message.routes.js'
+import chatbotRoutes from './routes/chatbot.routes.js'
 
 configDotenv()
 connectToMongoDB();
@@ -20,6 +21,7 @@ app.use("/api/auth", authRoutes)
 app.use("/api/team", teamRoutes);
 app.use("/api/ticket", ticketRoutes);
 app.use("/api/message", messageRoutes)
+app.use("/api/chatbot", chatbotRoutes)
 
 // Server Test Route
 app.get("/", (req, res) => {

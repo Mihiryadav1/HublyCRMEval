@@ -1,0 +1,59 @@
+.chatbotSettings-container {
+    width: 60%;
+    max-height: 100vh;
+
+    & .chatbox-preview {
+        padding: 1rem;
+        /* background-color: yellow; */
+
+    }
+
+    & .chatbox-messagePreview {
+        padding: 1rem;
+
+    }
+
+
+
+}
+
+.configurations {
+    position: absolute;
+    z-index: 20;
+    max-height: 100vh;
+    overflow: auto;
+    min-width: 25vw;
+    right: 2%;
+    top: 0;
+    padding: 1rem;
+}
+
+
+.configuration-cards {
+    padding: 12px;
+    background-color: white;
+    border-radius: 1rem;
+    margin: 0 auto;
+    margin-bottom: 12px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+    & .input-group {
+        display: flex;
+        margin-top: 10px;
+        flex-direction: column;
+
+        & input {
+            border: none;
+            border-radius: 0;
+            border-bottom: 1px solid black;
+        }
+    }
+}
+
+.saveconfigBtn {
+    padding: 8px 20px;
+    background-color: var(--primary-btn);
+    color: white;
+    border-radius: 10px;
+    margin: 1rem 0;
+}

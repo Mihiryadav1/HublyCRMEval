@@ -10,42 +10,42 @@ const Sidebar = () => {
             <img src="/HublyIcon.svg" alt="" />
             <ul>
                 <li>
-                    <Link to="/home" className={styles['link']}>
+                    <Link to="/app" className={styles['link']}>
                         <span className={styles['icon']}><IoHomeSharp /></span>
                         <span className={styles['label']}>Home</span>
                     </Link>
                 </li>
 
                 <li>
-                    <Link to="/contact-center" className={styles['link']}>
+                    <Link to="/app/contactcenter" className={styles['link']}>
                         <span className={styles['icon']}><IoChatboxEllipses /></span>
                         <span className={styles['label']}>Contact Center</span>
                     </Link>
                 </li>
 
                 <li>
-                    <Link to="/analytics" className={styles['link']}>
+                    <Link to="/app/analytics" className={styles['link']}>
                         <span className={styles['icon']}><IoStatsChart /></span>
                         <span className={styles['label']}>Analytics</span>
                     </Link>
                 </li>
 
                 <li>
-                    <Link to="/chatbot" className={styles['link']}>
+                    <Link to="/app/chatbot" className={styles['link']}>
                         <span className={styles['icon']}><RiRobot3Fill /></span>
                         <span className={styles['label']}>Chat bot</span>
                     </Link>
                 </li>
 
                 <li>
-                    <Link to="/team" className={styles['link']}>
+                    <Link to="/app/team" className={styles['link']}>
                         <span className={styles['icon']}><IoPeopleSharp /></span>
                         <span className={styles['label']}>Team</span>
                     </Link>
                 </li>
 
                 <li>
-                    <Link to="/settings" className={styles['link']}>
+                    <Link to="/app/settings" className={styles['link']}>
                         <span className={styles['icon']}><IoSettings /></span>
                         <span className={styles['label']}>Settings</span>
                     </Link>

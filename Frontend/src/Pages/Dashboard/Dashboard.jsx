@@ -42,7 +42,7 @@ const Dashboard = () => {
     }, [])
     return (
         <div className={styles['dashboard-container']}>
-            <input type="text" />
+            <input type="text" style={{ border: "1px solid #c7c5c5", margin:"1rem",width:"20vw" }} />
             <ul className={styles['ticket-filters']}>
                 <li className={styles['filter']} style={{
                     display: "flex", justifyContent: "center", alignItems: "center", gap: "5px"

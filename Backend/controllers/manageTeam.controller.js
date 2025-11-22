@@ -5,14 +5,13 @@ import bcrypt from "bcryptjs";
 export const createTeamMember = async (req, res) => {
     try {
         //Only admin can create team members
-        console.log("check role", req.user)
-        if (req.user.role !== 'admin') {
+        if (!req.user || req.user.role !== 'admin') {
             return res.status(403).json({ message: "Only admin can create team members." });
         }
-        const { name, email, password, role } = req.body;
+        const { name, email, role, phone = "321" } = req.body;
 
         //Fields validation
-        if (!name || !email || !password) {
+        if (!name || !email || !role) {
             return res.status(400).json({
                 message: "All fields are required"
             });
@@ -26,22 +25,22 @@ export const createTeamMember = async (req, res) => {
             });
         }
         //Hash Password
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(email, 10);
 
         //Create new team member
         const teamMember = new User({
             name,
             email,
             password: hashedPassword,
-            role: role || 'user'
+            role: 'user',
+            phone
         });
         // Remove password from response
-        const savedMember = await teamMember.save();
-        const memberResponse = savedMember.toObject();
-        delete memberResponse.password;
+        await teamMember.save();
 
         res.status(201).json({
             message: "Team member created successfully",
+            password: email
         })
 
     } catch (error) {
@@ -131,3 +130,68 @@ export const updateTeamMemberRole = async (req, res) => {
         });
     }
 }
+
+
+export const updateProfile = async (req, res) => {
+    try {
+        const userId = req.user.userId;
+        const { firstName, lastName, email, password, confirmPassword } = req.body;
+
+        // Check if email belongs to someone else
+        const existingUser = await User.findOne({ email });
+        if (existingUser && existingUser._id.toString() !== userId) {
+            return res.status(400).json({ message: "Email already exists" });
+        }
+
+        const user = await User.findById(userId);
+
+        // Build full name safely, fallback to existing
+        let fullName;
+        if (!firstName && !lastName) {
+            fullName = user.name; // keep old name
+        } else {
+            fullName = [firstName, lastName].filter(Boolean).join(" ");
+        }
+
+        // Name required for schema
+        if (!fullName.trim()) {
+            return res.status(400).json({ message: "Name is required" });
+        }
+        if (!password || !confirmPassword) {
+            return res.status(400).json({ message: "Password is required" });
+        }
+
+        // Password mismatch
+        if (password !== confirmPassword) {
+            return res.status(400).json({ message: "Both passwords must match" });
+        }
+
+        const updateData = {
+            name: fullName,
+            email
+        };
+
+        if (password && password.trim() !== "") {
+            updateData.password = await bcrypt.hash(password, 10);
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            updateData,
+            { new: true, runValidators: true }
+        ).select("-password");
+
+        res.json({
+            message: "Profile updated successfully",
+            user: updatedUser
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: "Error updating profile",
+            error: error.message
+        });
+    }
+};
+
