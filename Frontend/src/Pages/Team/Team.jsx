@@ -126,38 +126,38 @@ const Team = () => {
                         <CiEdit />
                       </button>
 
-                      {selectedId === teamMembers._id && (
-                        <div className={styles["deletepopup"]}>
-                          <h3>This teammate will be deleted.</h3>
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "flex-end",
-                              gap: "10px",
-                            }}
-                          >
-                            <button
-                              className={styles["deleteBtn"]}
-                              onClick={() => {
-                                deleteTeamMember(teamMembers._id);
-                                setSelectedId(null);
-                              }}
-                            >
-                              Confirm
-                            </button>
-                            <button
-                              className={styles["cancelBtn"]}
-                              onClick={() => {
-                                setSelectedId(null);
-                              }}
-                            >
-                              Cancel
-                            </button>
-                          </div>
-                        </div>
-                      )}
 
                     </td>
+                    {selectedId === teamMembers._id && (
+                      <div className={styles["deletepopup"]}>
+                        <h3>This teammate will be deleted.</h3>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "flex-end",
+                            gap: "10px",
+                          }}
+                        >
+                          <button
+                            className={styles["deleteBtn"]}
+                            onClick={() => {
+                              deleteTeamMember(teamMembers._id);
+                              setSelectedId(null);
+                            }}
+                          >
+                            Confirm
+                          </button>
+                          <button
+                            className={styles["cancelBtn"]}
+                            onClick={() => {
+                              setSelectedId(null);
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </tr>
                 );
               })}

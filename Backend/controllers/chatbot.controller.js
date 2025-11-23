@@ -26,3 +26,27 @@ export const saveChatbotConfig = async (req, res) => {
         res.status(500).json({ success: false, message: "Server error" });
     }
 };
+
+
+export const getChatbotConfig = async (req, res) => {
+    try {
+        const chatConfig = await Settings.findOne({});
+        if (!chatConfig) {
+            return res.status(404).json({
+                message: "Chatbot settings not found",
+                success: false
+            });
+        }
+        console.log(chatConfig.chatBotConfig)
+        res.status(200).json({
+            message: "Chatbot settings fetched",
+            chatConfig,
+            successs: true
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: "Error fetching chatbot config",
+            error: error.message
+        })
+    }
+}

@@ -8,11 +8,13 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 1rem;
+    /* background-color: green; */
 }
 
 .tableWrapper {
     max-height: 50vh;
     overflow-y: auto;
+    /* background-color: red; */
     border-radius: 8px;
 }
 
@@ -109,7 +111,8 @@ thead {
     position: absolute;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     padding: 1rem;
-    right: 0px;
+    right: 20%;
+    top: 10%;
     z-index: 20;
     border-radius: 10px;
     min-width: 400px;

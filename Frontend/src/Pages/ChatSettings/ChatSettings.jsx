@@ -4,7 +4,8 @@ import Chatbot from '../../Components/Chatbot/Chatbot'
 import { MdEdit } from "react-icons/md";
 import Welcome from '../../Components/ChatComponents/Welcome';
 const headerColors = ["#000", "#fff", "#33475B", "#036e5d"];
-
+import axios from 'axios'
+import { toast } from 'react-toastify';
 const ChatSettings = () => {
   const [selectedHeaderColor, setSelectedHeaderColor] = useState("#fff");
   const [selectedBgColor, setSelectedBgColor] = useState("#fff");
@@ -18,9 +19,22 @@ const ChatSettings = () => {
   });
   const saveChatbotConfig = async () => {
     try {
-      await axios.post(``)
-    } catch (error) {
+      await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/chatbot/chatbotconfig`,
+        {
+          "headerColor": `${chatBoxTheme.header}`,
+          "bgColor": `${chatBoxTheme.bgColor}`,
+          "firstMessage": `${chatBoxTheme.firstMessage}`,
+          "secondMessage": `${chatBoxTheme.secondMessage}`,
+          "welcomeMessage": `${chatBoxTheme.welcomeMessage}`,
+        }
+      ).then(res => {
+        console.log(res.data);
+        // toast()
 
+      })
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -158,7 +172,7 @@ const ChatSettings = () => {
         {/* Customer Form */}
         <div className={styles['configuration-cards']}>
           <p>Introduction Form</p>
-          <form onSubmit={""}>
+          <form >
             <div className={styles['input-group']}>
               <label htmlFor="">Your name</label>
               <input type="text" name='name' placeholder='Your name' />
