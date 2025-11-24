@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './Signin.module.css'
+import styles from './SignIn.module.css'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from "axios";
 import { toast } from 'react-toastify';
