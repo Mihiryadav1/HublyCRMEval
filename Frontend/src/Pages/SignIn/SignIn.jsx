@@ -63,7 +63,7 @@ const SignIn = () => {
                         <button type="submit" className={styles['submit-btn']}>Log In</button>
                     </form>
                     <p style={{ textAlign: "center", marginTop: "2rem" }}>Don't have an account?{" "}
-                        <Link>Sign up</Link></p>
+                        <Link to="/signup">Sign up</Link></p>
                 </div>
             </div>
             <div className={styles['sign-banner']}></div>
