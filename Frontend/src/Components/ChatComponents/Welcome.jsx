@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { memo } from 'react'
 import styles from "./Welcome.module.css"
-const Welcome = ({ chatBoxTheme }) => {
+const Welcome = memo(({ chatBoxTheme }) => {
     return (
         <div className={styles["message"]} >
             <div className={styles["avatar"]} style={{ textAlign: "center", position: "relative" }}>
@@ -9,6 +9,6 @@ const Welcome = ({ chatBoxTheme }) => {
             </div>
         </div>
     )
-}
+})
 
 export default Welcome

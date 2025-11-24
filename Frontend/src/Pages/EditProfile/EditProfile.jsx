@@ -29,9 +29,13 @@ const EditUser = () => {
         .put(`${import.meta.env.VITE_BACKEND_URL}/team/myProfile`, formData, {
           headers: { Authorization: `Bearer ${token}` },
         })
-        .then((res) => {
-          const team = res.data;
-          // console.log(team);
+        .then(() => {
+          toast("Profile updated successfully!", { type: "success" });
+          if (formData.password.trim() !== "") {
+            sessionStorage.removeItem("token");
+            navigate("/signin");
+            return;
+          }
           setFormData({
             firstName: '',
             lastName: '',
@@ -39,9 +43,6 @@ const EditUser = () => {
             password: '',
             confirmPassword: '',
           })
-          toast("Profile updated successfully!", { type: "success" });
-          sessionStorage.removeItem("token");
-          navigate("/signin")
 
         })
     } catch (error) {

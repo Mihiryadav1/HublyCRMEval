@@ -7,6 +7,8 @@ import { toast } from 'react-toastify';
 const Chatbot = ({ theme }) => {
   const { header, bgColor, firstMessage, secondMessage } = theme
   const [message, setMessage] = useState('')
+  const [firstMessageSent, setFirstMessageSent] = useState(false);
+
   const [customerForm, setCustomerForm] = useState({
     name: "",
     email: "",
@@ -39,6 +41,12 @@ const Chatbot = ({ theme }) => {
   }
   //Send Message
   const handleSendMessage = async () => {
+    if (!firstMessageSent) {
+      setAllMessages(prev => [...prev, { text: message, sender: "user" }]);
+      setFirstMessageSent(true);
+      setMessage("");
+      return;
+    }
     try {
       const ticketId = localStorage.getItem('ticketId')
       await axios.post(
@@ -118,50 +126,51 @@ const Chatbot = ({ theme }) => {
               wordBreak: "break-word"
             }}>{secondMessage}</div></div>
         </div>
-        <div style={{
-          display: "flex",
-          justifyContent: "flex-end",
-
-        }}>
-          <div action="" style={{ borderRadius: "10px", display: "inline-block", padding: "10px", marginTop: "10px" }}>
-            <div className={formStyle['configuration-cards']}>
-              <p>Introduction Form</p>
-              {
-                !ticketId && (
-                  <form onSubmit={createTicket}>
-                    <div className={formStyle['input-group']}>
-                      <label htmlFor="name">Your name</label>
-                      <input type="text" name='name' placeholder='Your name' value={customerForm.name} onChange={handleFormChange} />
-                    </div>
-                    <div className={formStyle['input-group']}>
-                      <label htmlFor="phone">Your Phone</label>
-                      <input type="text" name='phone' placeholder='+1 (000) 10 - 000' value={customerForm.phone} onChange={handleFormChange} />
-                    </div>
-                    <div className={formStyle['input-group']}>
-                      <label htmlFor="email">Your Email</label>
-                      <input type="email" name='email' placeholder='example@gmail.com' value={customerForm.email} onChange={handleFormChange} />
-                    </div>
-                    <div style={{ textAlign: "center" }}>  <button className={formStyle['thankBtn']}>Thank You</button></div>
-                  </form>
-                )
-              }
-            </div>
-            <div className="userMessages">
-              {
-                allMessages.map(message => {
-                  return <>
-                    <p style={{
-                      padding: "10px", boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
-                      borderRadius: "10px",
-                      marginBottom: "5px",
-                      backgroundColor: "white",
-                      wordBreak: "break-word"
-                    }}>{message.text}</p>
-                  </>
-                })
-              }
-            </div>
+        <div action="" style={{ borderRadius: "10px", display: "inline-block", padding: "10px", marginTop: "10px" }}>
+          <div className="userMessages">
+            {
+              allMessages.map(message => {
+                const isMine = message.sender === "user" ? true : false
+                return <div style={{
+                  // width: "350px",
+                  display: "flex",
+                  justifyContent: isMine ? "flex-end" : "flex-start"
+                }}>
+                  <p style={{
+                    padding: "10px", boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+                    borderRadius: "10px",
+                    marginBottom: "5px",
+                    backgroundColor: "white",
+                    wordBreak: "break-word"
+                  }}>{message.text}</p>
+                </div>
+              })
+            }
           </div>
+          {
+            firstMessageSent && !ticketId ? (
+              <div className={formStyle['configuration-cards']}>
+                <form onSubmit={createTicket}>
+                  <h4>Introduce Yourself</h4>
+                  <div className={formStyle['input-group']}>
+                    <label htmlFor="name">Your name</label>
+                    <input type="text" name='name' placeholder='Your name' value={customerForm.name} onChange={handleFormChange} />
+                  </div>
+                  <div className={formStyle['input-group']}>
+                    <label htmlFor="phone">Your Phone</label>
+                    <input type="text" name='phone' placeholder='+1 (000) 10 - 000' value={customerForm.phone} onChange={handleFormChange} />
+                  </div>
+                  <div className={formStyle['input-group']}>
+                    <label htmlFor="email">Your Email</label>
+                    <input type="email" name='email' placeholder='example@gmail.com' value={customerForm.email} onChange={handleFormChange} />
+                  </div>
+                  <div style={{ textAlign: "center" }}>  <button className={formStyle['thankBtn']}>Thank You</button></div>
+                </form>
+              </div>
+            ) : (<></>)
+          }
+
+
         </div>
       </div>
       <div className={styles["textBox"]}>

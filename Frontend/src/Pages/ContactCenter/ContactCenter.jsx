@@ -137,7 +137,8 @@ const ContactCenter = () => {
       ).then(res => {
         console.log(res)
         setMessages(prev => [...prev, res.data.message]);
-        setNewMessage("");
+        getAllMessagesForTicketId(activeTicket._id)
+        setNewMessage('');
       })
 
 
@@ -229,34 +230,43 @@ const ContactCenter = () => {
           <span className={styles['icon']}><IoHomeOutline /></span>
         </div>
         {/* Message Display */}
-        {isResolved ? (<p className={styles['chat-disabled']}>This chat has been resolved  </p>)
-          : assignedToOther && !isResolved ? (<p className={styles['chat-disabled']}>This chat is assigned to another team member. You no longer have access.</p>) : (<div className={styles['messagesContainer']}>
-            {messages.map(msg => {
-              const currentUserId = sessionStorage.getItem("userId");
-              const isMine = String(msg.senderId?._id || msg.senderId) === String(currentUserId);
-              console.log(isMine)
+        {/* Warning Banner (if no access) */}
+        {isResolved && (
+          <p className={styles['chat-disabled']}>This chat has been resolved</p>
+        )}
 
-              return (
-                <div
-                  key={msg._id}
-                  className={`${styles.messageRow} ${isMine ? styles.mine : styles.theirs}`}
-                >
-                  <div className={styles.messageBubble}>
-                    <p className={styles.messageText}>{msg.text}</p>
-                    <span className={styles.messageTime}>
-                      {msg.createdAt
-                        ? new Date(msg.createdAt).toLocaleTimeString([], {
-                          hour: "2-digit",
-                          minute: "2-digit"
-                        })
-                        : ""}
-                    </span>
-                  </div>
+        {assignedToOther && !isResolved && (
+          <p className={styles['chat-disabled']}>
+            This chat is assigned to another team member. You no longer have access.
+          </p>
+        )}
+
+        {/* Messages Always Visible */}
+        <div className={styles['messagesContainer']}>
+          {messages.map(msg => {
+            const isMine = msg.sender === "user";
+            return (
+              <div
+                key={msg._id}
+                className={`${styles.messageRow} ${isMine ? styles.mine : styles.theirs
+                  }`}
+              >
+                <div className={styles.messageBubble}>
+                  <p className={styles.messageText}>{msg.text}</p>
+                  <span className={styles.messageTime}>
+                    {msg.createdAt
+                      ? new Date(msg.createdAt).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit"
+                      })
+                      : ""}
+                  </span>
                 </div>
-              );
-            })}
-          </div>)
-        }
+              </div>
+            );
+          })}
+        </div>
+
         {/* //Input for chatting */}
         <div className={styles["input"]}>
           <input onChange={(e) => {

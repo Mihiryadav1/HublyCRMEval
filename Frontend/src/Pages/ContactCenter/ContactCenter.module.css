@@ -168,7 +168,11 @@
 
 .chat-disabled {
     font-size: 1rem;
+    background-color: var(--white);
     text-align: center;
+    position: absolute;
+    bottom: 12.5%;
+    width: 100%; 
 }
 
 .messageText {
