@@ -79,9 +79,7 @@ const Analytics = () => {
             <div className={styles["piechart-container"]}>
 
                 <p>For highest customer satisfaction rates you should aim to reply to an incoming customer's message in 15 seconds or less. Quick responses will get you more conversations, help you earn customers trust and make more sales.</p>
-                <div className="pieChart">
-                    asdasd sec
-                </div>
+               <span>0 secs</span>
             </div>
             <div className={styles["replytime-container"]}>
                 <p>A callback system on a website, as well as proactive invitations, help to attract even more customers. A separate round button for ordering a call with a small animation helps to motivate more customers to make calls.</p>
