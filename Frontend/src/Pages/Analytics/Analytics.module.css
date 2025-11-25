@@ -1,0 +1,24 @@
+.analytics-container {
+    max-width: 55%;
+    padding: 1rem;
+}
+
+.piechart-container,
+.total-chats,
+.replytime-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & span {
+        font-size: 1.5rem;
+        color: #0cbf0c;
+        font-weight: 500;
+    }
+
+    & p {
+        max-width: 80%;
+    }
+}
+
+ 

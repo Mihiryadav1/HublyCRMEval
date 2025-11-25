@@ -244,7 +244,7 @@ const ContactCenter = () => {
         {/* Messages Always Visible */}
         <div className={styles['messagesContainer']}>
           {messages.map(msg => {
-            const isMine = msg.sender === "user";
+            const isMine = msg.sender === "team";
             return (
               <div
                 key={msg._id}
