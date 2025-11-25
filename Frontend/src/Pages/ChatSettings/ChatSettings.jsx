@@ -30,7 +30,7 @@ const ChatSettings = () => {
         }
       ).then(res => {
         console.log(res.data);
-        // toast()
+         toast("Chatbot settings saved!", { type: "success" });
 
       })
     } catch (error) {

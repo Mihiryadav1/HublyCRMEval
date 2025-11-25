@@ -5,10 +5,11 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 const EditUser = () => {
   const navigate = useNavigate()
+  const loggedInUserEmail = sessionStorage.getItem("email")
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    email: '',
+    email: loggedInUserEmail,
     password: '',
     confirmPassword: '',
   });
@@ -39,7 +40,6 @@ const EditUser = () => {
           setFormData({
             firstName: '',
             lastName: '',
-            email: '',
             password: '',
             confirmPassword: '',
           })
@@ -66,7 +66,7 @@ const EditUser = () => {
 
           <div className={styles['input-group']}>
             <label htmlFor="email">Email</label>
-            <input type="email" name="email" onChange={handleChange} value={formData.email} />
+            <input type="email" name="email" onChange={handleChange} value={formData.email} disabled={true} />
           </div>
 
           <div className={styles['input-group']}>

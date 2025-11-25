@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import styles from "./Chatbot.module.css"
 import formStyle from "../ChatComponents/HomeScreenChatbox.module.css"
 import { BiSolidSend } from "react-icons/bi"
+import { RxCross1 } from "react-icons/rx";
 import axios from 'axios'
 import { toast } from 'react-toastify';
-const Chatbot = ({ theme }) => {
+const Chatbot = memo(({ theme, showChatWindow, setshowChatWindow }) => {
   const { header, bgColor, firstMessage, secondMessage } = theme
   const [message, setMessage] = useState('')
   const [firstMessageSent, setFirstMessageSent] = useState(false);
@@ -16,6 +17,7 @@ const Chatbot = ({ theme }) => {
   })
   const [ticketId, setTicketId] = useState(null)
   const [allMessages, setAllMessages] = useState([])
+
   //Create Customer Ticket
   const createTicket = async (e) => {
     e.preventDefault()
@@ -31,7 +33,7 @@ const Chatbot = ({ theme }) => {
         console.log(res.data.ticket._id)
         localStorage.setItem("ticketId", res.data.ticket._id)
         setTicketId(res.data.ticket._id)
-        toast("Ticket Created!", { type: "success" });
+        toast("Thankyou! Our team wil get back to you!", { type: "success" });
 
       })
 
@@ -55,7 +57,7 @@ const Chatbot = ({ theme }) => {
           text: message
         }
       ).then(res => {
-        console.log(res)
+        console.log(res, 'sent messages')
         setMessage('')
         getMessages()
       })
@@ -64,20 +66,23 @@ const Chatbot = ({ theme }) => {
       console.log(error)
     }
   }
-
+  //Form Change
   const handleFormChange = async (e) => {
     const { name, value } = e.target
     setCustomerForm(prev => ({ ...prev, [name]: value }))
   }
+  //Get messages in Chatbot chatwindow
   const getMessages = async () => {
     try {
       const ticketId = localStorage.getItem("ticketId")
-      await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/message/${ticketId}/`
-      ).then(res => {
-        console.log(res.data, 'messages')
-        setAllMessages(res.data.messages)
-      })
+      if (ticketId) {
+        await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/message/${ticketId}/`
+        ).then(res => {
+          console.log(res.data, 'messages')
+          setAllMessages(res.data.messages)
+        })
+      }
 
     } catch (error) {
       console.log(error)
@@ -93,12 +98,15 @@ const Chatbot = ({ theme }) => {
   return (
     <div className={styles['chatbot-container']}>
       <div className={styles["chat-header"]} style={{ backgroundColor: `${header}` }}>
-        <div className="flex" style={{ alignItems: "center" }}>
-          <div className={styles["avatar"]}>
-            <img src="/hublychatbot.png" alt="" />
-            <p></p>
-          </div>
-          <div className={styles["chatbot-name"]}>Hubly</div></div>
+        <div className="flex" style={{ justifyContent: "space-between", width: "100%", alignItems: "center" }}>
+          <div className="flex" style={{ alignItems: "center" }}>
+            <div className={styles["avatar"]}>
+              <img src="/hublychatbot.png" alt="" />
+              <p></p>
+            </div>
+            <div className={styles["chatbot-name"]}>Hubly</div></div>
+          <div className='icon' onClick={() => setshowChatWindow(!showChatWindow)}><RxCross1 /></div>
+        </div>
       </div>
       <div className={styles["messages"]} style={{ backgroundColor: `${bgColor}` }}>
         <div className='flex'>
@@ -132,7 +140,6 @@ const Chatbot = ({ theme }) => {
               allMessages.map(message => {
                 const isMine = message.sender === "user" ? true : false
                 return <div style={{
-                  // width: "350px",
                   display: "flex",
                   justifyContent: isMine ? "flex-end" : "flex-start"
                 }}>
@@ -143,10 +150,12 @@ const Chatbot = ({ theme }) => {
                     backgroundColor: "white",
                     wordBreak: "break-word"
                   }}>{message.text}</p>
+
                 </div>
               })
             }
           </div>
+          {/* Customer Form */}
           {
             firstMessageSent && !ticketId ? (
               <div className={formStyle['configuration-cards']}>
@@ -167,7 +176,14 @@ const Chatbot = ({ theme }) => {
                   <div style={{ textAlign: "center" }}>  <button className={formStyle['thankBtn']}>Thank You</button></div>
                 </form>
               </div>
-            ) : (<></>)
+            ) : (<p style={{
+              boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+              padding: "10px",
+              borderRadius: "10px",
+              marginBottom: "5px",
+              backgroundColor: "white",
+              maxWidth: "50%",
+            }}>Thankyou</p>)
           }
 
 
@@ -182,6 +198,6 @@ const Chatbot = ({ theme }) => {
 
     </div >
   )
-}
+})
 
 export default Chatbot

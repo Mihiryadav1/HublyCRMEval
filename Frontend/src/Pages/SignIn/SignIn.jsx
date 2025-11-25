@@ -35,6 +35,7 @@ const SignIn = () => {
                     sessionStorage.setItem("token", res.data.token);
                     sessionStorage.setItem("role", res.data.user.role)
                     sessionStorage.setItem("userId", res.data.user._id)
+                    sessionStorage.setItem("email", res.data.user.email)
                 })
                 //Navigate to dashboard after login
                 navigate('/app');

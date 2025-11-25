@@ -42,7 +42,7 @@ const HomeScreenChatbox = () => {
         <div className='' style={{ position: "fixed", bottom: "10%", right: "10%", zIndex: 1200 }}>
             <div style={{ marginBottom: "2rem" }}>
                 {showChatWindow && (<>
-                    <Chatbot theme={theme} />
+                    <Chatbot theme={theme} showChatWindow={showChatWindow} setshowChatWindow={setshowChatWindow}/>
                 </>)}
             </div>
             <div>
