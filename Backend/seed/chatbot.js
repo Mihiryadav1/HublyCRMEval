@@ -11,6 +11,11 @@ export const seedSettings = async () => {
           firstMessage: "Hey!",
           secondMessage: "How can I help?",
           welcomeMessage: "👋Welcome to Hubly!",
+          introduceHeading: "Introduce Yourself",
+          nameLabel: "Your Name",
+          phoneLabel: "Your Phone",
+          emailLabel: "Your Email",
+          submitButtonText: "Thank You"
         },
         missedChatTimer: 5,
       });

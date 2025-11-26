@@ -15,7 +15,12 @@ const ChatSettings = () => {
     bgColor: "#fff",
     firstMessage: "How cani help you ?",
     secondMessage: "Ask me anything",
-    welcomeMessage: "Want to chat about Hubly? I'm a chatbot here to help you find your way."
+    welcomeMessage: "Want to chat about Hubly? I'm a chatbot here to help you find your way.",
+    introduceHeading: "Introduce Yourself",
+    nameLabel: "Your Name",
+    phoneLabel: "Your Phone",
+    emailLabel: "Your Email",
+    submitButtonText: "Thank You"
   });
   const saveChatbotConfig = async () => {
     try {
@@ -37,12 +42,13 @@ const ChatSettings = () => {
       console.log(error)
     }
   }
+  const updateLabel = (key, value) => { setChatBoxTheme(prev => ({ ...prev, [key]: value })); };
 
   return (
     <>
       <div className={styles['chatbotSettings-container']}>
         <div className={styles['chatbox-preview']}>
-          <Chatbot theme={chatBoxTheme} />
+          <Chatbot theme={chatBoxTheme} setChatBoxTheme={setChatBoxTheme} />
         </div>
 
         <div className={styles['chatbox-messagePreview']} >
@@ -165,18 +171,38 @@ const ChatSettings = () => {
         </div>
         {/* Customer Form */}
         <div className={styles['configuration-cards']}>
-          <p>Introduction Form</p>
+          <input
+            type="text"
+            value={chatBoxTheme.introduceHeading}
+            onChange={(e) => updateLabel("introduceHeading", e.target.value)}
+            className={styles.editableInput}
+          />
           <form >
             <div className={styles['input-group']}>
-              <label htmlFor="">Your name</label>
+              <input
+                type="text"
+                value={chatBoxTheme.nameLabel}
+                onChange={(e) => updateLabel("nameLabel", e.target.value)}
+                className={styles.editableInput}
+              />
               <input type="text" name='name' placeholder='Your name' />
             </div>
             <div className={styles['input-group']}>
-              <label htmlFor="">Your Phone</label>
+              <input
+                type="text"
+                value={chatBoxTheme.phoneLabel}
+                onChange={(e) => updateLabel("phoneLabel", e.target.value)}
+                className={styles.editableInput}
+              />
               <input type="text" name='email' placeholder='+1 (000) 10 - 000' />
             </div>
             <div className={styles['input-group']}>
-              <label htmlFor="">Your Email</label>
+              <input
+                type="text"
+                value={chatBoxTheme.emailLabel}
+                onChange={(e) => updateLabel("emailLabel", e.target.value)}
+                className={styles.editableInput}
+              />
               <input type="email" name='phone' placeholder='example@gmail.com' />
             </div>
 

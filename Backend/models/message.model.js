@@ -9,6 +9,13 @@ const messageSchema = new mongoose.Schema({
         required: true
     },
     text: { type: String, required: true },
+    missed: {
+        type: Boolean,
+        default: false,
+    },
+    expiresAt: {
+        type: Date,
+    },
 }, { timestamps: true });
 
 const Message = mongoose.model("Message", messageSchema);

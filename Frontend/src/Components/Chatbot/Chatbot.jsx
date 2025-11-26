@@ -5,15 +5,20 @@ import { BiSolidSend } from "react-icons/bi"
 import { RxCross1 } from "react-icons/rx";
 import axios from 'axios'
 import { toast } from 'react-toastify';
-const Chatbot = memo(({ theme, showChatWindow, setshowChatWindow }) => {
+const Chatbot = memo(({ theme }) => {
+  const isMobile = window.innerWidth <= 600;
   const { header, bgColor, firstMessage, secondMessage } = theme
   const [message, setMessage] = useState('')
   const [firstMessageSent, setFirstMessageSent] = useState(false);
 
   const [customerForm, setCustomerForm] = useState({
+    nameLabel: "",
     name: "",
+    emailLabel: "",
     email: "",
-    phone: ""
+    phoneLabel: "",
+    phone: "",
+    introduceHeading:""
   })
   const [ticketId, setTicketId] = useState(null)
   const [allMessages, setAllMessages] = useState([])
@@ -30,8 +35,8 @@ const Chatbot = memo(({ theme, showChatWindow, setshowChatWindow }) => {
           phone: customerForm.phone
         }
       ).then(res => {
-        console.log(res.data.ticket._id)
-        localStorage.setItem("ticketId", res.data.ticket._id)
+        // console.log(res.data.ticket._id)
+        sessionStorage.setItem("ticketId", res.data.ticket._id)
         setTicketId(res.data.ticket._id)
         toast("Thankyou! Our team wil get back to you!", { type: "success" });
 
@@ -50,14 +55,14 @@ const Chatbot = memo(({ theme, showChatWindow, setshowChatWindow }) => {
       return;
     }
     try {
-      const ticketId = localStorage.getItem('ticketId')
+      const ticketId = sessionStorage.getItem('ticketId')
       await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/message/${ticketId}`,
         {
           text: message
         }
       ).then(res => {
-        console.log(res, 'sent messages')
+        // console.log(res, 'sent messages')
         setMessage('')
         getMessages()
       })
@@ -74,12 +79,12 @@ const Chatbot = memo(({ theme, showChatWindow, setshowChatWindow }) => {
   //Get messages in Chatbot chatwindow
   const getMessages = async () => {
     try {
-      const ticketId = localStorage.getItem("ticketId")
+      const ticketId = sessionStorage.getItem("ticketId")
       if (ticketId) {
         await axios.get(
           `${import.meta.env.VITE_BACKEND_URL}/message/${ticketId}/`
         ).then(res => {
-          console.log(res.data, 'messages')
+          // console.log(res.data, 'messages')
           setAllMessages(res.data.messages)
         })
       }
@@ -88,15 +93,33 @@ const Chatbot = memo(({ theme, showChatWindow, setshowChatWindow }) => {
       console.log(error)
     }
   }
+
+  //Get customized Form
+  const getForm = async () => {
+    try {
+      await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/chatbot/`
+      ).then(res => {
+        console.log(res.data.chatConfig.chatBotConfig, 'form')
+        const formReponse = res.data.chatConfig.chatBotConfig
+        // setAllMessages(res.data.messages)
+        setCustomerForm(prev => ({ ...prev, emailLabel: formReponse.emailLabel, nameLabel: formReponse.nameLabel, phoneLabel: formReponse.phoneLabel, introduceHeading: formReponse.introduceHeading }))
+      })
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
   useEffect(() => {
-    const ticketId = localStorage.getItem("ticketId")
+    const ticketId = sessionStorage.getItem("ticketId")
     if (ticketId) getMessages()
   }, [])
   useEffect(() => {
     getMessages()
+    getForm()
   }, [])
   return (
-    <div className={styles['chatbot-container']}>
+    <div className={styles['chatbot-container']} style={{ width: isMobile ? "100vw" : "420px" }}>
       <div className={styles["chat-header"]} style={{ backgroundColor: `${header}` }}>
         <div className="flex" style={{ justifyContent: "space-between", width: "100%", alignItems: "center" }}>
           <div className="flex" style={{ alignItems: "center" }}>
@@ -105,7 +128,6 @@ const Chatbot = memo(({ theme, showChatWindow, setshowChatWindow }) => {
               <p></p>
             </div>
             <div className={styles["chatbot-name"]}>Hubly</div></div>
-          <div className='icon' onClick={() => setshowChatWindow(!showChatWindow)}><RxCross1 /></div>
         </div>
       </div>
       <div className={styles["messages"]} style={{ backgroundColor: `${bgColor}` }}>
@@ -157,33 +179,34 @@ const Chatbot = memo(({ theme, showChatWindow, setshowChatWindow }) => {
           </div>
           {/* Customer Form */}
           {
-            firstMessageSent && !ticketId ? (
+            firstMessageSent && !ticketId && (
               <div className={formStyle['configuration-cards']}>
                 <form onSubmit={createTicket}>
-                  <h4>Introduce Yourself</h4>
+                  <h4>{customerForm.introduceHeading}</h4>
                   <div className={formStyle['input-group']}>
-                    <label htmlFor="name">Your name</label>
+                    <label htmlFor="name">{customerForm.nameLabel}</label>
                     <input type="text" name='name' placeholder='Your name' value={customerForm.name} onChange={handleFormChange} />
                   </div>
                   <div className={formStyle['input-group']}>
-                    <label htmlFor="phone">Your Phone</label>
+                    <label htmlFor="phone">{customerForm.phoneLabel}</label>
                     <input type="text" name='phone' placeholder='+1 (000) 10 - 000' value={customerForm.phone} onChange={handleFormChange} />
                   </div>
                   <div className={formStyle['input-group']}>
-                    <label htmlFor="email">Your Email</label>
+                    <label htmlFor="email">{customerForm.emailLabel}</label>
                     <input type="email" name='email' placeholder='example@gmail.com' value={customerForm.email} onChange={handleFormChange} />
                   </div>
                   <div style={{ textAlign: "center" }}>  <button className={formStyle['thankBtn']}>Thank You</button></div>
                 </form>
               </div>
-            ) : (<p style={{
-              boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
-              padding: "10px",
-              borderRadius: "10px",
-              marginBottom: "5px",
-              backgroundColor: "white",
-              maxWidth: "50%",
-            }}>Thankyou</p>)
+            )
+            // (<p style={{
+            //   boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+            //   padding: "10px",
+            //   borderRadius: "10px",
+            //   marginBottom: "5px",
+            //   backgroundColor: "white",
+            //   maxWidth: "50%",
+            // }}>Thankyou</p>)
           }
 
 

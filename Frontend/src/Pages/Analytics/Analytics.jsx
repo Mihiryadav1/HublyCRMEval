@@ -11,11 +11,13 @@ const Analytics = () => {
     const [totalTickets, setTotalTickets] = useState(0)
     const avgReplyTime = async () => {
         try {
-            const res = await axios.get(
-                `${import.meta.env.VITE_BACKEND_URL}/analytics/avgReplyTime/`,
+            await axios.get(
+                `${import.meta.env.VITE_BACKEND_URL}/message/missedchats/`,
                 { headers: { Authorization: `Bearer ${token}` } }
-            );
-            setChartData(res.data.data || []);
+            ).then(res => {
+                console.log(res.data.data, "missed")
+                setChartData(res.data.data);
+            })
         } catch (error) {
             console.error(error);
         }
@@ -59,8 +61,9 @@ const Analytics = () => {
                 ]}
                 series={[
                     {
-                        data: chartData.map((d) => d.avgReplyMinutes),
-                        label: "Avg Reply Time (minutes)",
+                        data: chartData.map((d) => d.missed),
+                        label: "Missed Chats",
+
                     },
                 ]}
                 height={300}
@@ -79,10 +82,10 @@ const Analytics = () => {
             <div className={styles["piechart-container"]}>
 
                 <p>For highest customer satisfaction rates you should aim to reply to an incoming customer's message in 15 seconds or less. Quick responses will get you more conversations, help you earn customers trust and make more sales.</p>
-               <span>0 secs</span>
+                <span>0 secs</span>
             </div>
             <div className={styles["replytime-container"]}>
-                <p>A callback system on a website, as well as proactive invitations, help to attract even more customers. A separate round button for ordering a call with a small animation helps to motivate more customers to make calls.</p>
+                <p>A callback system on a website, as well as proactive invitations, help to attract even more customers. A separate round button for ordering a call with a small animation helps to motivate more customers to make calls.</p>
                 <div className="pieChart">
                     {totalTickets && (
                         <Gauge

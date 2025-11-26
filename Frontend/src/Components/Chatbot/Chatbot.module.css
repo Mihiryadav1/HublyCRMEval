@@ -1,5 +1,4 @@
 .chatbot-container {
-    width: 420px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     height: 500px;
     display: flex;
@@ -11,7 +10,6 @@
     & .chat-header {
         width: 100%;
         height: 12%;
-        /* color: white; */
         background-color: var(--white);
         display: flex;
         align-items: center;
@@ -78,13 +76,13 @@
             padding: 1rem;
             font-size: 1rem;
             height: 100%;
-            
+
         }
-        
+
         & textarea:focus {
             outline: none;
         }
-        
+
         & .sendBtn {
             height: 100%;
             padding: 10px;
@@ -100,3 +98,4 @@
         padding: 10px 20px;
     }
 }
+

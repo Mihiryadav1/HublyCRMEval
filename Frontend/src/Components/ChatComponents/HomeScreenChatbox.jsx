@@ -3,8 +3,9 @@ import { BiSolidMessageSquareDots } from "react-icons/bi";
 import axios from 'axios'
 import Chatbot from '../Chatbot/Chatbot';
 import Welcome from '././Welcome';
-
+import { RxCross1 } from "react-icons/rx";
 const HomeScreenChatbox = () => {
+    const isMobile = window.innerWidth <= 600;
     const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
     const [showChatWindow, setshowChatWindow] = useState(false);
     const [theme, setTheme] = useState({
@@ -19,7 +20,7 @@ const HomeScreenChatbox = () => {
         setShowWelcomeMessage(false)
         setshowChatWindow(prev => !prev)
     }
-    
+
     const getChatbotConfig = async () => {
         try {
             const res = await axios.get(
@@ -41,14 +42,48 @@ const HomeScreenChatbox = () => {
     return (
         <div className='' style={{ position: "fixed", bottom: "10%", right: "10%", zIndex: 1200 }}>
             <div style={{ marginBottom: "2rem" }}>
-                {showChatWindow && (<>
-                    <Chatbot theme={theme} showChatWindow={showChatWindow} setshowChatWindow={setshowChatWindow}/>
-                </>)}
+                {showChatWindow && (
+                    <div
+                        style={{
+                            position: isMobile ? "fixed" : "absolute",
+                            bottom: isMobile ? "0" : "100px",
+                            right: isMobile ? "0" : "0",
+                            left: isMobile ? "0" : "auto",
+                            width: isMobile ? "100vw" : "370px",
+                            height: isMobile ? "100dvh" : "480px",
+                            zIndex: 2000,
+                            borderRadius: isMobile ? "0" : "20px",
+                            background: "white",
+                            boxShadow: "0 4px 20px rgba(0,0,0,0.2)"
+                        }}
+                    >
+                        <Chatbot theme={theme} />
+                    </div>
+                )}
             </div>
             <div>
                 <p> {showWelcomeMessage ? <Welcome chatBoxTheme={theme} /> : <></>}</p>
-                <div style={{ position: "fixed", bottom: "3%", right: "3%", width: "80px", height: "80px", borderRadius: "50%", backgroundColor: "#244779", display: "flex", justifyContent: "center", alignItems: "center", fontSize: "2rem", color: "white" }} onClick={showChatBox}>
-                    <BiSolidMessageSquareDots />
+                <div
+                    id="chatToggle"
+                    style={{
+                        position: "fixed",
+                        bottom: "3%",
+                        right: "3%",
+                        width: "80px",
+                        height: "80px",
+                        borderRadius: "50%",
+                        backgroundColor: "#244779",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontSize: "2rem",
+                        color: "white",
+                        zIndex: 3000,
+                        cursor: "pointer"
+                    }}
+                    onClick={showChatBox}
+                >
+                    {!showChatWindow ? <BiSolidMessageSquareDots /> : <RxCross1 />}
                 </div>
             </div>
         </div >

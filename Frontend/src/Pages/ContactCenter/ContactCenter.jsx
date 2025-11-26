@@ -15,6 +15,7 @@ const ContactCenter = () => {
 
   const [messages, setMessages] = useState([])
   const [newMessage, setNewMessage] = useState("")
+  const [isMissedChat, setIsMissedChat] = useState(false)
   const [team, setTeam] = useState([])
   const role = sessionStorage.getItem("role");
   const userId = sessionStorage.getItem("userId");
@@ -241,7 +242,7 @@ const ContactCenter = () => {
           </p>
         )}
 
-        {/* Messages Always Visible */}
+        {/* Messages Display Area */}
         <div className={styles['messagesContainer']}>
           {messages.map(msg => {
             const isMine = msg.sender === "team";
@@ -262,6 +263,7 @@ const ContactCenter = () => {
                       : ""}
                   </span>
                 </div>
+                {msg.sender !== "team" && (<div style={{ color: "Red", fontSize: ".8rem", display: "flex", alignItems: "flex-end", paddingLeft: "1rem" }}>{msg.missed ? "missed chat" : ""}</div>)}
               </div>
             );
           })}
