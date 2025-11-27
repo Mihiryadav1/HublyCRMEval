@@ -35,8 +35,7 @@ bower_components
 # node-waf configuration
 .lock-wscript
 
-# Compiled binary addons (https://nodejs.org/api/addons.html)
-build/Release
+
 
 # Dependency directories
 node_modules/
@@ -84,7 +83,6 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist
 
 # Gatsby files
 .cache/
@@ -132,5 +130,7 @@ psd
 thumb
 sketch
 
+# allow React build folder in Backend to be pushed
+!Backend/dist/
 
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Node,react,env
