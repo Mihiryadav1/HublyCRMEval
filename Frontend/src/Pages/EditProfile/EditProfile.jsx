@@ -66,7 +66,9 @@ const EditUser = () => {
 
           <div className={styles['input-group']}>
             <label htmlFor="email">Email</label>
-            <input type="email" name="email" onChange={handleChange} value={formData.email} disabled={true} />
+            <input type="email" name="email" value={formData.email} readOnly onClick={() => {
+              toast("Email cannot be changed", { type: "warning" });
+            }} />
           </div>
 
           <div className={styles['input-group']}>

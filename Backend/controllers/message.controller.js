@@ -147,58 +147,54 @@ export const getWeeklyMissedChats = async (req, res) => {
 
 
 export const getAverageReplyTime = async (req, res) => {
-  try {
-    const avg = await Message.aggregate([
-      {
-        $match: { sender: "customer" }
-      },
-      {
-        $lookup: {
-          from: "messages",
-          let: { ticketId: "$ticketId", createdAt: "$createdAt" },
-          pipeline: [
-            {
-              $match: {
-                $expr: {
-                  $and: [
-                    { $eq: ["$ticketId", "$$ticketId"] },
-                    { $eq: ["$sender", "agent"] },
-                    { $gt: ["$createdAt", "$$createdAt"] }
-                  ]
+    try {
+        // Sort by ticket and time so we can walk in order
+        const messages = await Message.find().sort({ ticketId: 1, createdAt: 1 });
+
+        // Map: ticketId -> first customer message time
+        const firstCustomerTime = new Map();
+        // Map: ticketId -> first reply time in minutes
+        const firstReplyTimes = new Map();
+
+        for (const msg of messages) {
+            const ticketId = msg.ticketId.toString();
+
+            if (msg.sender === "user") {
+                // Save first customer time per ticket (only once)
+                if (!firstCustomerTime.has(ticketId)) {
+                    firstCustomerTime.set(ticketId, msg.createdAt);
                 }
-              }
-            },
-            { $sort: { createdAt: 1 } },
-            { $limit: 1 }
-          ],
-          as: "reply"
-        }
-      },
-      { $unwind: "$reply" },
-      {
-        $project: {
-          diffMinutes: {
-            $divide: [
-              { $subtract: ["$reply.createdAt", "$createdAt"] },
-              1000 * 60
-            ]
-          }
-        }
-      },
-      {
-        $group: {
-          _id: null,
-          avgReplyTime: { $avg: "$diffMinutes" }
-        }
-      }
-    ]);
+            }
 
-    res.json({
-      success: true,
-      avgReplyTime: avg[0]?.avgReplyTime || 0
-    });
+            if (msg.sender === "team") {
+                // If we already have first customer time and we don't yet
+                // have a reply recorded for this ticket, this is the first reply
+                if (
+                    firstCustomerTime.has(ticketId) &&
+                    !firstReplyTimes.has(ticketId)
+                ) {
+                    const diffMs = msg.createdAt - firstCustomerTime.get(ticketId);
+                    const diffMinutes = diffMs / 60000;
+                    firstReplyTimes.set(ticketId, diffMinutes);
+                }
+            }
+        }
 
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
+        const replyTimes = Array.from(firstReplyTimes.values());
+
+        const avg =
+            replyTimes.length > 0
+                ? replyTimes.reduce((a, b) => a + b, 0) / replyTimes.length
+                : 0;
+        const avgMinutes =
+            replyTimes.length > 0
+                ? replyTimes.reduce((a, b) => a + b, 0) / replyTimes.length
+                : 0;
+
+        const avgSeconds = (avgMinutes * 60).toFixed(2);
+
+        res.json({ success: true, avgReplyTimeMinutes: avg, avgTimeSeconds: avgSeconds });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
 };
