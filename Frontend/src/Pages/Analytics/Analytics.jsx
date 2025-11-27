@@ -67,46 +67,49 @@ const Analytics = () => {
     return (
         <div className={styles["analytics-container"]}>
             <h2>Missed Chats</h2>
+            <div className={styles["chartWrapper"]}>
+                <LineChart
+                    xAxis={[
+                        {
+                            data: chartData.map((d) => `Week ${d.week}`),
+                            scaleType: "point",
+                            label: "Week",
+                            showGrid: false
+                        },
+                    ]}
+                    series={[
+                        {
+                            data: chartData.map((d) => d.missed),
+                            label: "Missed Chats",
+                            color: "#0cbf0c",
+                        },
+                    ]}
+                    yAxis={[
+                        {
+                            showGrid: true
+                        }
+                    ]}
+                    height={300}
+                    margin={{ top: 20, bottom: 40, left: 60, right: 20 }}
+                    grid={{ vertical: false, horizontal: true }}
+                    sx={{
+                        ".MuiMarkElement": {
+                            stroke: "black",
+                            fill: "white",
+                            r: 4,
+                        },
+                        margin: 0
+                    }}
 
-            <LineChart
-                xAxis={[
-                    {
-                        data: chartData.map((d) => `Week ${d.week}`),
-                        scaleType: "point",
-                        label: "Week",
-                        showGrid: false
-                    },
-                ]}
-                series={[
-                    {
-                        data: chartData.map((d) => d.missed),
-                        label: "Missed Chats",
-                        color: "#0cbf0c",
-                    },
-                ]}
-                yAxis={[
-                    {
-                        showGrid: true
-                    }
-                ]}
-                height={300}
-                margin={{ top: 20, bottom: 40, left: 60, right: 20 }}
-                grid={{ vertical: false, horizontal: true }}
-                sx={{
-                    ".MuiMarkElement": {
-                        stroke: "black",
-                        fill: "white",
-                        r: 4,
-                    },
-                }}
+                />
 
-            />
-
-
+            </div>
+            <h2 className={styles['heading']}>Average Reply Time</h2>
             <div className={styles["piechart-container"]}>
                 <p>For highest customer satisfaction rates you should aim to reply to an incoming customer's message in 15 seconds or less. Quick responses will get you more conversations, help you earn customers trust and make more sales.</p>
                 <span>{avgReplyTime} secs</span>
             </div>
+            <h2 className={styles['heading']}>Resolved Tickets</h2>
             <div className={styles["replytime-container"]}>
                 <p>A callback system on a website, as well as proactive invitations, help to attract even more customers. A separate round button for ordering a call with a small animation helps to motivate more customers to make calls.</p>
                 <div className="pieChart">
@@ -133,9 +136,9 @@ const Analytics = () => {
                     )}
                 </div>
             </div>
+            <h2 className={styles['heading']}>Total Chats</h2>
             <div className={styles["total-chats"]}>
                 <p>This metric Shows the total number of chats for all Channels for the selected the selected period.</p>
-
                 <span>{totalTickets} Chats</span>
             </div>
 

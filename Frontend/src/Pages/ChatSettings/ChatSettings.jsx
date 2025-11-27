@@ -22,6 +22,8 @@ const ChatSettings = () => {
     emailLabel: "Your Email",
     submitButtonText: "Thank You"
   });
+  const updateLabel = (key, value) => { setChatBoxTheme(prev => ({ ...prev, [key]: value })); };
+
   const saveChatbotConfig = async () => {
     try {
       await axios.post(
@@ -32,23 +34,25 @@ const ChatSettings = () => {
           "firstMessage": `${chatBoxTheme.firstMessage}`,
           "secondMessage": `${chatBoxTheme.secondMessage}`,
           "welcomeMessage": `${chatBoxTheme.welcomeMessage}`,
+          "nameLabel": `${chatBoxTheme.nameLabel}`,
+          "emailLabel": `${chatBoxTheme.emailLabel}`,
+          "phoneLabel": `${chatBoxTheme.phoneLabel}`,
+          "introduceHeading": `${chatBoxTheme.introduceHeading}`,
         }
       ).then(res => {
         console.log(res.data);
         toast("Chatbot settings saved!", { type: "success" });
-
       })
     } catch (error) {
       console.log(error)
     }
   }
-  const updateLabel = (key, value) => { setChatBoxTheme(prev => ({ ...prev, [key]: value })); };
 
   return (
     <>
       <div className={styles['chatbotSettings-container']}>
         <div className={styles['chatbox-preview']}>
-          <Chatbot theme={chatBoxTheme} setChatBoxTheme={setChatBoxTheme}  disabledforpreview={true}/>
+          <Chatbot theme={chatBoxTheme} setChatBoxTheme={setChatBoxTheme} disabledforpreview={true} />
         </div>
 
         <div className={styles['chatbox-messagePreview']} >
@@ -214,13 +218,13 @@ const ChatSettings = () => {
           <p>Welcome Message</p>
           <div className='flex' style={{ alignItems: "center", gap: "1rem" }}>
             <div className="flex" style={{ backgroundColor: "#F6F7F5", padding: "0.5rem", borderRadius: "10px", width: "90%", justifyContent: "space-between" }}>
-              <textarea type="text" value={chatBoxTheme.welcomeMessage} onChange={(e) => {
+              <textarea type="text" value={chatBoxTheme.welcomeMessage} maxLength={100} onChange={(e) => {
                 setChatBoxTheme(prev => ({ ...prev, welcomeMessage: e.target.value }))
               }} style={{
                 border: "0", margin: "10px 0",
                 alignItems: "center", backgroundColor: "#F6F7F5", height: "4rem", width: "100%", resize: "none", outline: "none", padding: "5px"
               }} />
-              <span style={{ backgroundColor: "#F6F7F5", color: "#9b9a9a", fontSize: "0.8rem", heigh: "4rem" }}>{chatBoxTheme.welcomeMessage.length}/50</span>
+              <span style={{ backgroundColor: "#F6F7F5", color: "#9b9a9a", fontSize: "0.8rem", heigh: "4rem" }}>{chatBoxTheme.welcomeMessage.length}/100</span>
             </div>
             <span style={{ cursor: "pointer" }}><MdEdit /></span>
           </div>
