@@ -10,21 +10,13 @@ import messageRoutes from './routes/message.routes.js'
 import chatbotRoutes from './routes/chatbot.routes.js'
 import analyticsRoutes from './routes/analytics.routes.js'
 
-configDotenv()
-connectToMongoDB();
-
 const app = express();
-//middlewares
-app.use(express.json());
-
+//CORS
 const allowedOrigins = [
     "http://localhost:5173",
     "https://hubly-crm-eval.onrender.com",
     "https://hublycrm-frontend.vercel.app/"
 ];
-
-/* ----------------------------- FIXED CORS ----------------------------- */
-
 app.use(cors({
     origin: (origin, callback) => {
         if (!origin || allowedOrigins.includes(origin)) {
@@ -36,11 +28,16 @@ app.use(cors({
 
     credentials: true,
 }));
-
-// IMPORTANT: allow preflight before any route
 app.options(/.*/, cors());
 
-// app.use
+//DotENV
+configDotenv()
+//DB connection
+connectToMongoDB();
+
+
+//middlewares
+app.use(express.json());
 app.use(
     session({
         secret: `${process.env.SESSION_SECRET}`,
@@ -58,9 +55,9 @@ app.use("/api/chatbot", chatbotRoutes)
 app.use("/api/analytics", analyticsRoutes)
 
 
-// // Server Test Route
+// Server Test Route
 app.get("/", (req, res) => {
-    res.send("<h1>Server Up</h1>");
+    res.send("Server is up and running");
 });
 
 app.listen(process.env.PORT || 5000, () => {
