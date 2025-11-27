@@ -35,12 +35,15 @@ const Footer = () => {
     return (
         <footer className={styles["footer"]}>
             <div className={styles["footer-columns"]}>
+                <div style={{ gridRowStart: "0", gridRowEnd: "2", gridColumnStart: "0" }}>
+                    <img src="./logo.svg" alt="" />
+                </div>
                 {Object.entries(sections).map(([title, links]) => (
                     <div className="footer-column" key={title}>
-                        <h4>{title}</h4>
+                        <p className={['title']}>{title}</p>
                         <ul>
                             {links.map(link => (
-                                <li key={link}><a href="#">{link}</a></li>
+                                <p key={link}>{link}</p>
                             ))}
                         </ul>
                     </div>
@@ -51,7 +54,7 @@ const Footer = () => {
                     <a href="#" key={icon} className={`icon-${icon}`} aria-label={icon}></a>
                 ))}
             </div>
-        </footer> 
+        </footer>
     );
 };
 

@@ -5,7 +5,7 @@ import { BiSolidSend } from "react-icons/bi"
 import { RxCross1 } from "react-icons/rx";
 import axios from 'axios'
 import { toast } from 'react-toastify';
-const Chatbot = memo(({ theme }) => {
+const Chatbot = memo(({ theme, disabledforpreview }) => {
   const isMobile = window.innerWidth <= 600;
   const { header, bgColor, firstMessage, secondMessage } = theme
   const [message, setMessage] = useState('')
@@ -18,7 +18,7 @@ const Chatbot = memo(({ theme }) => {
     email: "",
     phoneLabel: "",
     phone: "",
-    introduceHeading:""
+    introduceHeading: ""
   })
   const [ticketId, setTicketId] = useState(null)
   const [allMessages, setAllMessages] = useState([])
@@ -215,7 +215,7 @@ const Chatbot = memo(({ theme }) => {
       <div className={styles["textBox"]}>
         <textarea name="message" id="" placeholder='Write a message' value={message} onChange={(e) => {
           setMessage(e.target.value)
-        }}></textarea>
+        }} disabled={disabledforpreview}></textarea>
         <p className={styles['sendBtn']} onClick={handleSendMessage}><BiSolidSend /></p>
       </div>
 

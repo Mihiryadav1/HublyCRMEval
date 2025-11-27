@@ -48,7 +48,7 @@ const ChatSettings = () => {
     <>
       <div className={styles['chatbotSettings-container']}>
         <div className={styles['chatbox-preview']}>
-          <Chatbot theme={chatBoxTheme} setChatBoxTheme={setChatBoxTheme} />
+          <Chatbot theme={chatBoxTheme} setChatBoxTheme={setChatBoxTheme}  disabledforpreview={true}/>
         </div>
 
         <div className={styles['chatbox-messagePreview']} >

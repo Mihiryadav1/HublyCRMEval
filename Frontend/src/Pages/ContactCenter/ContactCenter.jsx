@@ -16,7 +16,6 @@ const ContactCenter = () => {
 
   const [messages, setMessages] = useState([])
   const [newMessage, setNewMessage] = useState("")
-  const [isMissedChat, setIsMissedChat] = useState(false)
   const [team, setTeam] = useState([])
   const role = sessionStorage.getItem("role");
   const userId = sessionStorage.getItem("userId");
