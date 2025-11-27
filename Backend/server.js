@@ -24,7 +24,7 @@ app.use(express.json());
 const allowedOrigins = [
     "http://localhost:5173",
     "https://hubly-crm-eval.onrender.com",
-    "https://hublycrm-frontend-3qcnwwm3d-mihiryadav1s-projects.vercel.app/"
+    "https://hublycrm-frontend.vercel.app//"
 ];
 
 /* ----------------------------- FIXED CORS ----------------------------- */

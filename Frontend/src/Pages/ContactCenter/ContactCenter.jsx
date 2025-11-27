@@ -3,9 +3,10 @@ import styles from "./ContactCenter.module.css"
 import { BiSolidSend } from "react-icons/bi";
 import { IoCallOutline, IoMailOutline, IoHomeOutline } from "react-icons/io5";
 import { MdOutlinePersonPin } from "react-icons/md";
-
+import { useNavigate } from 'react-router-dom'
 import axios from "axios"
 const ContactCenter = () => {
+  const navigate = useNavigate()
   const [tickets, setTickets] = useState([])
   const [activeTicket, setActiveTicket] = useState(null);
   const [showAssignPopup, setShowAssignPopup] = useState(false);
@@ -228,7 +229,9 @@ const ContactCenter = () => {
               <p>{activeTicket.ticketId}</p>
             </>)
           }</span>
-          <span className={styles['icon']}><IoHomeOutline /></span>
+          <span className={styles['icon']} onClick={() => {
+            navigate("/app")
+          }}><IoHomeOutline /></span>
         </div>
         {/* Message Display */}
         {/* Warning Banner (if no access) */}
