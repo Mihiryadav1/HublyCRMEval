@@ -1,5 +1,7 @@
 import express from 'express'
+import path from "path";
 import cors from 'cors'
+import { fileURLToPath } from "url";
 import { configDotenv } from 'dotenv'
 import { connectToMongoDB } from './config/db.js'
 import session from 'express-session'
@@ -14,6 +16,8 @@ configDotenv()
 connectToMongoDB();
 
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 //middlewares
 app.use(express.json());
 
@@ -33,7 +37,7 @@ app.use(cors({
 // IMPORTANT: allow preflight before any route
 app.options(/.*/, cors());
 
-
+// app.use
 app.use(
     session({
         secret: `${process.env.SESSION_SECRET}`,
@@ -50,10 +54,15 @@ app.use("/api/message", messageRoutes)
 app.use("/api/chatbot", chatbotRoutes)
 app.use("/api/analytics", analyticsRoutes)
 
-// Server Test Route
-app.get("/", (req, res) => {
-    res.send("<h1>Server Up</h1>");
+app.use(express.static(path.join(__dirname, "build")));
+// ⬇ REACT FALLBACK (Express 5 safe)
+app.get(/.*/, (req, res) => {
+    res.sendFile(path.join(__dirname, "build", "index.html"));
 });
+// // Server Test Route
+// app.get("/", (req, res) => {
+//     res.send("<h1>Server Up</h1>");
+// });
 
 app.listen(process.env.PORT || 5000, () => {
     console.log(`Server is listening at  http://localhost:${process.env.PORT}`);
