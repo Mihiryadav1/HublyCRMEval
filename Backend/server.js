@@ -57,7 +57,7 @@ app.use("/api/analytics", analyticsRoutes)
 app.use(express.static(path.join(__dirname, "build")));
 // ⬇ REACT FALLBACK (Express 5 safe)
 app.get(/.*/, (req, res) => {
-    res.sendFile(path.join(__dirname, "build", "index.html"));
+    res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 // // Server Test Route
 // app.get("/", (req, res) => {
