@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
+import User from "../models/users.model.js";
 
-export const isAuthenticated = (req, res, next) => {
+export const isAuthenticated = async (req, res, next) => {
     const authHeader = req.headers.authorization || req.headers.Authorization;
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -14,7 +15,15 @@ export const isAuthenticated = (req, res, next) => {
     try {
         //verify token
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-        console.log(decodedToken,'decoded')
+        // Find user in DB
+        const user = await User.findById(decodedToken.userId);
+        if (user.passwordUpdatedAt && decodedToken.iat * 1000 < user.passwordUpdatedAt.getTime()) {
+            return res.status(401).json({
+                message: "Password updated — please login again",
+                success: false
+            });
+        }
+
         req.user = decodedToken;
         next();
 

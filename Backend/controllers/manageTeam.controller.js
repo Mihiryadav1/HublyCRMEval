@@ -157,9 +157,9 @@ export const updateProfile = async (req, res) => {
         if (!fullName.trim()) {
             return res.status(400).json({ message: "Name is required" });
         }
-        if (!password || !confirmPassword) {
-            return res.status(400).json({ message: "Password is required" });
-        }
+        // if (!password || !confirmPassword) {
+        //     return res.status(400).json({ message: "Password is required" });
+        // }
 
         // Password mismatch
         if (password !== confirmPassword) {
@@ -170,9 +170,12 @@ export const updateProfile = async (req, res) => {
             name: fullName,
             email
         };
+        let passwordChanged = false;
 
         if (password && password.trim() !== "") {
             updateData.password = await bcrypt.hash(password, 10);
+            updateData.passwordUpdatedAt = new Date();
+            passwordChanged = true
         }
 
         const updatedUser = await User.findByIdAndUpdate(
@@ -183,7 +186,8 @@ export const updateProfile = async (req, res) => {
 
         res.json({
             message: "Profile updated successfully",
-            user: updatedUser
+            user: updatedUser,
+            passwordChanged 
         });
 
     } catch (error) {

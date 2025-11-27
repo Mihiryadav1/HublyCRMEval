@@ -37,6 +37,11 @@ const userSchema = new mongoose.Schema(
             enum: ["user", "admin"],
             default: "user",
         },
+        passwordUpdatedAt: {
+            type: Date,
+            default: null,
+        }
+
     },
     { timestamps: true }
 );
