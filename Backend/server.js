@@ -52,9 +52,9 @@ app.use("/api/analytics", analyticsRoutes)
 
  
 // // Server Test Route
-// app.get("/", (req, res) => {
-//     res.send("<h1>Server Up</h1>");
-// });
+app.get("/", (req, res) => {
+    res.send("<h1>Server Up</h1>");
+});
 
 app.listen(process.env.PORT || 5000, () => {
     console.log(`Server is listening at  http://localhost:${process.env.PORT}`);
