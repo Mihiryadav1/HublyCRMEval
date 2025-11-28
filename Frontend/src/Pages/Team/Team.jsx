@@ -67,6 +67,7 @@ const Team = () => {
       })
       .then((res) => {
         getAllTeamMembers()
+        
       });
 
   }

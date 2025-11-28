@@ -20,7 +20,6 @@ const ContactCenter = () => {
   const [team, setTeam] = useState([])
   const role = sessionStorage.getItem("role");
   const userId = sessionStorage.getItem("userId");
-
   const isResolved = activeTicket?.status === "resolved";
   const assignedToOther =
     role === "admin" &&
