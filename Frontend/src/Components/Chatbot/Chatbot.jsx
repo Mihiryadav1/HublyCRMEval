@@ -2,7 +2,6 @@ import React, { memo, useEffect, useState } from 'react'
 import styles from "./Chatbot.module.css"
 import formStyle from "../ChatComponents/HomeScreenChatbox.module.css"
 import { BiSolidSend } from "react-icons/bi"
-import { RxCross1 } from "react-icons/rx";
 import axios from 'axios'
 import { toast } from 'react-toastify';
 const Chatbot = memo(({ theme, disabledforpreview }) => {

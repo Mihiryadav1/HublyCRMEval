@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
 import styles from "./Analytics.module.css";
@@ -24,24 +24,25 @@ const Analytics = () => {
         }
     };
 
-    const getAllTickets = async () => {
-        try {
-            const res = await axios.get(
-                `${import.meta.env.VITE_BACKEND_URL}/ticket/`,
-                { headers: { Authorization: `Bearer ${token}` } }
-            ).then(res => {
+    const getAllTickets =
+        useCallback(async () => {
+            try {
+                const res = await axios.get(
+                    `${import.meta.env.VITE_BACKEND_URL}/ticket/`,
+                    { headers: { Authorization: `Bearer ${token}` } }
+                ).then(res => {
 
-                const allTickets = res.data.tickets
-                console.log(allTickets)
-                setTotalTickets(allTickets.length)
-                const resolvedTicket = allTickets.filter(ticket => ticket.status === "resolved")
-                setResolvedTickets(resolvedTicket.length)
-            })
-        } catch (error) {
-            console.error(error);
-        }
+                    const allTickets = res.data.tickets
+                    console.log(allTickets)
+                    setTotalTickets(allTickets.length)
+                    const resolvedTicket = allTickets.filter(ticket => ticket.status === "resolved")
+                    setResolvedTickets(resolvedTicket.length)
+                })
+            } catch (error) {
+                console.error(error);
+            }
 
-    }
+        }, [token])
     const getAvgReplyTime = async () => {
 
         try {
