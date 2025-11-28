@@ -11,7 +11,7 @@ const ChatSettings = () => {
   const [selectedBgColor, setSelectedBgColor] = useState("#fff");
 
   const [chatBoxTheme, setChatBoxTheme] = useState({
-    header: "#33475B",
+    headerColor: "#fff",
     bgColor: "#fff",
     firstMessage: "How cani help you ?",
     secondMessage: "Ask me anything",
@@ -29,7 +29,7 @@ const ChatSettings = () => {
       await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/chatbot/chatbotconfig`,
         {
-          "headerColor": `${chatBoxTheme.header}`,
+          "headerColor": `${chatBoxTheme.headerColor}`,
           "bgColor": `${chatBoxTheme.bgColor}`,
           "firstMessage": `${chatBoxTheme.firstMessage}`,
           "secondMessage": `${chatBoxTheme.secondMessage}`,
@@ -72,7 +72,7 @@ const ChatSettings = () => {
                   key={index}
                   onClick={() => {
                     setSelectedHeaderColor(item);
-                    setChatBoxTheme(prev => ({ ...prev, header: item }));
+                    setChatBoxTheme(prev => ({ ...prev, headerColor: item }));
                   }}
                   style={{
                     backgroundColor: item,
