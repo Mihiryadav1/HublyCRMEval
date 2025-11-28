@@ -142,6 +142,7 @@ const Team = () => {
                       <button
                         className={styles["icon"]}
                         onClick={() => {
+                          console.log('clicked')
                           setIsEditing(true)
                           // setSelectedId(teamMembers._id)
                           setSelectedId(null);
