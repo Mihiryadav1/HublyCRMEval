@@ -4,7 +4,7 @@ import formStyle from "../ChatComponents/HomeScreenChatbox.module.css"
 import { BiSolidSend } from "react-icons/bi"
 import axios from 'axios'
 import { toast } from 'react-toastify';
-const Chatbot = memo(({ theme, disabledforpreview }) => {
+const Chatbot = memo(({ theme, disabledforpreview, setChatBoxTheme }) => {
   const isMobile = window.innerWidth <= 600;
   const { headerColor, bgColor, firstMessage, secondMessage } = theme
   const [message, setMessage] = useState('')
