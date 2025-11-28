@@ -139,12 +139,12 @@ const Team = () => {
                       >
                         <MdDeleteOutline />
                       </button>
-
                       <button
                         className={styles["icon"]}
                         onClick={() => {
                           setIsEditing(true)
-                          setSelectedId(teamMembers._id);
+                          // setSelectedId(teamMembers._id)
+                          setSelectedId(null);
                           setEditDetails({
                             name: teamMembers.name,
                             email: teamMembers.email,
