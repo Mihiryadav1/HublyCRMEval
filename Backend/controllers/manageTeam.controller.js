@@ -1,6 +1,6 @@
 import User from "../models/users.model.js";
 import bcrypt from "bcryptjs";
-
+import Ticket from "../models/ticket.model.js"
 //Create Team Members
 export const createTeamMember = async (req, res) => {
     try {
@@ -91,8 +91,15 @@ export const deleteTeamMember = async (req, res) => {
         if (member.role === "admin") {
             return res.status(403).json({ message: "Cannot delete admin" });
         }
+        const fallbackAdminId = req.user.userId;
 
+        // Reassign all tickets that were assigned to this member
+        await Ticket.updateMany(
+            { assignedTo: memberId },
+            { assignedTo: fallbackAdminId }
+        );
         await User.findByIdAndDelete(memberId);
+
         res.status(200).json({ message: "Team member deleted successfully" });
     } catch (error) {
         res.status(500).json({
@@ -142,7 +149,6 @@ export const updateTeamMember = async (req, res) => {
         });
     }
 }
-
 
 export const updateProfile = async (req, res) => {
     try {
