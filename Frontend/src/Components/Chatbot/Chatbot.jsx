@@ -199,14 +199,6 @@ const Chatbot = memo(({ theme, disabledforpreview, setChatBoxTheme }) => {
                 </form>
               </div>
             )
-            // (<p style={{
-            //   boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
-            //   padding: "10px",
-            //   borderRadius: "10px",
-            //   marginBottom: "5px",
-            //   backgroundColor: "white",
-            //   maxWidth: "50%",
-            // }}>Thankyou</p>)
           }
 
 

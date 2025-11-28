@@ -1,7 +1,7 @@
 import Settings from "../models/chatbot.model.js"
 export const saveChatbotConfig = async (req, res) => {
     try {
-        const { headerColor, bgColor, firstMessage, secondMessage, welcomeMessage, emailLabel, phoneLabel, nameLabel } = req.body;
+        const { headerColor, bgColor, firstMessage, secondMessage, welcomeMessage, emailLabel, phoneLabel, nameLabel, introduceHeading } = req.body;
 
         let settings = await Settings.findOne();
 
@@ -17,7 +17,8 @@ export const saveChatbotConfig = async (req, res) => {
             welcomeMessage,
             nameLabel,
             emailLabel,
-            phoneLabel
+            phoneLabel,
+            introduceHeading
         };
 
         await settings.save();
