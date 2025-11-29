@@ -54,3 +54,33 @@ export const getChatbotConfig = async (req, res) => {
         })
     }
 }
+
+//Missed Chat Timer 
+export const updateMissedChatTimer = async (req, res) => {
+    try {
+        const { timerInMinutes } = req.body; 
+        if (typeof timerInMinutes !== "number" || timerInMinutes < 0) {
+            return res.status(400).json({ message: "Invalid timer format" });
+        }
+
+        const settings = await Settings.findOne();
+        if (!settings) {
+            // Create first document if none exists
+            const newSettings = await Settings.create({ missedChatTimer: timerInMinutes });
+            return res.status(200).json({
+                message: "Timer saved successfully",
+                settings: newSettings,
+            });
+        }
+
+        settings.missedChatTimer = timerInMinutes;
+        await settings.save();
+
+        res.status(200).json({
+            message: "Timer updated successfully",
+            settings,
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

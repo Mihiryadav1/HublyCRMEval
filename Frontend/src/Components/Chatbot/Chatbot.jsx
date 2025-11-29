@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 const Chatbot = memo(({ theme, disabledforpreview, setChatBoxTheme }) => {
   const isMobile = window.innerWidth <= 600;
   const { headerColor, bgColor, firstMessage, secondMessage } = theme
-  console.log(';TTHHERE',theme)
   const [message, setMessage] = useState('')
   const [firstMessageSent, setFirstMessageSent] = useState(false);
 
@@ -100,7 +99,7 @@ const Chatbot = memo(({ theme, disabledforpreview, setChatBoxTheme }) => {
       await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/chatbot/`
       ).then(res => {
-        console.log(res.data.chatConfig.chatBotConfig, 'form')
+        // console.log(res.data.chatConfig.chatBotConfig, 'form')
         const formReponse = res.data.chatConfig.chatBotConfig
         // setAllMessages(res.data.messages)
         setCustomerForm(prev => ({ ...prev, emailLabel: formReponse.emailLabel, nameLabel: formReponse.nameLabel, phoneLabel: formReponse.phoneLabel, introduceHeading: formReponse.introduceHeading }))
@@ -208,7 +207,7 @@ const Chatbot = memo(({ theme, disabledforpreview, setChatBoxTheme }) => {
         <textarea name="message" id="" placeholder='Write a message' value={message} onChange={(e) => {
           setMessage(e.target.value)
         }} disabled={disabledforpreview}></textarea>
-        <p className={styles['sendBtn']} onClick={handleSendMessage}><BiSolidSend /></p>
+        <p className={styles['sendBtn']} onClick={handleSendMessage} ><BiSolidSend /></p>
       </div>
 
     </div >

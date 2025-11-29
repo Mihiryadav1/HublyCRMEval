@@ -45,12 +45,13 @@ export const addMessageToTicketForTeam = async (req, res) => {
     try {
         const ticketId = req.params.ticketId;
         const { text } = req.body;
-        console.log(req.user)
+
         // Find ticket by custom ticketId
         const ticket = await Ticket.findById(ticketId);
         if (!ticket) {
             return res.status(404).json({ message: "Ticket not found" });
         }
+        //Find Last User Message
         const lastUserMsg = await Message.findOne({
             ticketId: ticket._id,
             sender: "user",
@@ -58,6 +59,7 @@ export const addMessageToTicketForTeam = async (req, res) => {
             expiresAt: { $exists: true }
         }).sort({ createdAt: -1 });
 
+        //Sending Team message 
         const newMessage = new Message({
             ticketId: ticket._id,
             sender: "team",
@@ -65,9 +67,9 @@ export const addMessageToTicketForTeam = async (req, res) => {
             text,
 
         });
-        console.log(newMessage, 'newmessage')
 
         await newMessage.save();
+
         if (lastUserMsg) {
             const replyIsLate = Date.now() > lastUserMsg.expiresAt.getTime();
             if (replyIsLate) {

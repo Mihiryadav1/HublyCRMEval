@@ -12,6 +12,7 @@ const Team = () => {
   const [isEditing, setIsEditing] = useState(false)
   const [selectedSaveId, setSelectedSaveId] = useState(false);
   const [sortOrder, setSortOrder] = useState("asc");
+  const [isLoading, setIsLoading] = useState(false)
   const [teamMemberDetails, setTeamMemberDetails] = useState({
     name: "",
     email: "",
@@ -35,6 +36,7 @@ const Team = () => {
   }
 
   const getAllTeamMembers = async () => {
+    setIsLoading(true)
     const token = sessionStorage.getItem("token");
     await axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/team`, {
@@ -44,6 +46,7 @@ const Team = () => {
         const team = res.data.teamMembers;
         console.log(team);
         setTeam(team);
+        setIsLoading(false)
       });
   };
 
@@ -102,7 +105,13 @@ const Team = () => {
   }, []);
   return (
     <div className={styles["team-container"]}>
+      {isLoading && (<div style={{ height: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center", gap: "2rem" }}>
+        <img src="https://media1.giphy.com/media/v1.Y2lkPTZjMDliOTUybGoyYzJhbXR1aWNqYXZtZHo4M3Q5cXJvbzlsZzd3OGR6bXhkMHlzcCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/L05HgB2h6qICDs5Sms/200.gif" alt="" width='60px' />
+        <span style={{ fontSize: "1.5rem" }}>Loading...</span>
+      </div>)}
       <h2>Team</h2>
+
+
       <div className={styles["team"]}>
         <div className={styles['tableWrapper']}>
           <table>
@@ -119,7 +128,8 @@ const Team = () => {
             <tbody>
               {team.map((teamMembers) => {
                 return (
-                  <tr>
+
+                  (<tr>
                     <td>
                       <img
                         className={styles["profileImage"]}
@@ -276,9 +286,13 @@ const Team = () => {
                       </div>
                     )}
 
-                  </tr>
+                  </tr>)
+
                 );
-              })}
+              })
+
+              }
+
             </tbody>
           </table>
         </div>

@@ -6,6 +6,7 @@ import Welcome from '../../Components/ChatComponents/Welcome';
 const headerColors = ["#000", "#fff", "#33475B", "#036e5d"];
 import axios from 'axios'
 import { toast } from 'react-toastify';
+import TimePicker from '../../Components/TimePicker/TimePicker';
 const ChatSettings = () => {
   const [selectedHeaderColor, setSelectedHeaderColor] = useState("#fff");
   const [selectedBgColor, setSelectedBgColor] = useState("#fff");
@@ -22,6 +23,35 @@ const ChatSettings = () => {
     emailLabel: "Your Email",
     submitButtonText: "Thank You"
   });
+  const [value, setValue] = useState({
+    hour: "00",
+    minute: "10",
+    second: "00",
+  });
+
+
+  const handleSave = async () => {
+
+    const totalMinutes =
+      Math.ceil((Number(value.hour) * 60 +
+        Number(value.minute) +
+        Number(value.second) / 60));
+
+    const token = sessionStorage.getItem("token");
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/chatbot/updateMissedTime`,
+        { "timerInMinutes": totalMinutes },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      const missedChatTimer = res.data.settings.missedChatTimer
+      console.log(missedChatTimer, "Missed")
+
+    } catch (error) {
+      console.log(error);
+    }  
+  };
+
   const updateLabel = (key, value) => { setChatBoxTheme(prev => ({ ...prev, [key]: value })); };
 
   const saveChatbotConfig = async () => {
@@ -30,7 +60,8 @@ const ChatSettings = () => {
         `${import.meta.env.VITE_BACKEND_URL}/chatbot/chatbotconfig`,
         chatBoxTheme
       ).then(res => {
-        console.log(res.data);
+        // console.log(res.data);
+        handleSave()
         toast("Chatbot settings saved!", { type: "success" });
       })
     } catch (error) {
@@ -218,6 +249,11 @@ const ChatSettings = () => {
             </div>
             <span style={{ cursor: "pointer" }}><MdEdit /></span>
           </div>
+
+        </div>
+
+        <div className={styles['configuration-cards']}>
+          <TimePicker value={value} setValue={setValue} />
           <div className="flex" style={{ justifyContent: "flex-end" }}><button className={styles['saveconfigBtn']} onClick={saveChatbotConfig}>Save</button></div>
         </div>
       </div >

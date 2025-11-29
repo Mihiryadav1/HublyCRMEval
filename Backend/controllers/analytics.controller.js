@@ -80,58 +80,5 @@ export const getAvgReplyTime = async (req, res) => {
 };
 
 
-// export const getMissedChats = async (req, res) => {
-
-//     try {
-//         const tickets = await Ticket.find();
-//         let weeklyData = {};
-
-//         for (const ticket of tickets) {
-//             const messages = await Message.find({ ticketId: ticket._id }).sort({ createdAt: 1 });
-//             if (!messages.length) continue;
-
-//             for (let i = 0; i < messages.length; i++) {
-//                 const userMsg = messages[i];
-//                 if (userMsg.sender !== "user") continue;
-
-//                 // Find next team reply
-//                 const teamReply = messages.slice(i + 1).find(
-//                     m => m.sender === "team" && m.createdAt > userMsg.createdAt
-//                 );
-
-//                 let isMissed = false;
-
-//                 if (!teamReply) {
-//                     isMissed = true; // no reply at all
-//                 } else {
-//                     const diffSeconds =
-//                         (new Date(teamReply.createdAt) - new Date(userMsg.createdAt)) / 1000;
-//                     if (diffSeconds > MISSED_CHAT_THRESHOLD) {
-//                         isMissed = true; // reply too late
-//                     }
-//                 }
-
-//                 if (isMissed) {
-//                     const week = getWeekNumber(userMsg.createdAt);
-//                     if (!weeklyData[week]) weeklyData[week] = 0;
-//                     weeklyData[week] += 1;
-//                 }
-//             }
-//         }
-
-//         const weeklyMissed = Object.entries(weeklyData).map(([week, count]) => ({
-//             week: Number(week),
-//             missedChats: count
-//         }));
-
-//         return res.json({ success: true, data: weeklyMissed });
-
-
-//     } catch (error) {
-//         console.error(err);
-//         return res.status(500).json({ success: false, message: "Server error" });
-
-//     }
-// }
 
 

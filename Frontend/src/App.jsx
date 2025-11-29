@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import "./App.css"
 import { ToastContainer, toast } from 'react-toastify';
 import PrivateRoute from "./Components/PrivateRoutes/PrivateRoute.jsx";
+import TimePicker from "./Components/TimePicker/TimePicker.jsx";
 
 const Main = React.lazy(() => import('./Pages/Main/Main.jsx'));
 const Layout = React.lazy(() => import('./Layout/Layout.jsx'));
@@ -22,6 +23,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Main />} />
+          <Route path="/time" element={<TimePicker />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<Signup />} />
           {/* Protected Routes */}
