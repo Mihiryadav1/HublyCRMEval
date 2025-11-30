@@ -58,7 +58,8 @@ export const getTeamMembers = async (req, res) => {
         if (req.user.role !== 'admin') {
             return res.status(403).json({ message: "Only admin can view team members." });
         }
-        const teamMembers = await User.find({ role: { $ne: "admin" } }).select("-password");
+        // const teamMembers = await User.find({ role: { $ne: "admin" } }).select("-password");
+        const teamMembers = await User.find().select("-password");
         res.status(200).json({
             message: "Team members fetched successfully",
             teamMembers
@@ -113,7 +114,7 @@ export const deleteTeamMember = async (req, res) => {
 export const updateTeamMember = async (req, res) => {
     try {
         const { memberId } = req.params;
-        const { name, email, password, role } = req.body;
+        const { name, email, password, role, phone } = req.body;
 
         //Only admin can update the roles
         if (req.user.role !== "admin") {
@@ -130,6 +131,7 @@ export const updateTeamMember = async (req, res) => {
         memberToUpdate.name = name;
         memberToUpdate.role = role;
         memberToUpdate.email = email;
+        memberToUpdate.phone = phone;
         //Hash incoming password
         if (password && password.trim() !== "") {
             const hashedPassword = await bcrypt.hash(password, 10);

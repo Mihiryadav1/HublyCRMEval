@@ -23,7 +23,8 @@ const Team = () => {
     name: "",
     email: "",
     role: "",
-    password: ""
+    password: "",
+    phone: ""
   });
 
 
@@ -145,7 +146,10 @@ const Team = () => {
                       <button
                         className={styles["icon"]}
                         onClick={() => {
-                          // deleteTeamMember(teamMembers._id)
+                          if (teamMembers.role === "admin") {
+                            toast.warn("Admin cannot be deleted!");
+                            return;
+                          }
                           setSelectedId(teamMembers._id);
                         }}
                       >
@@ -155,13 +159,15 @@ const Team = () => {
                         className={styles["icon"]}
                         onClick={() => {
                           console.log('clicked')
-                          setSelectedId(null);
+                          setSelectedId(teamMembers._id);
+                          // setSelectedId(null);
                           setIsEditing(true)
                           // setSelectedId(teamMembers._id)
                           setEditDetails({
                             name: teamMembers.name,
                             email: teamMembers.email,
                             role: teamMembers.role,
+                            phone: teamMembers.phone,
                             password: ""
                           });
                         }}
