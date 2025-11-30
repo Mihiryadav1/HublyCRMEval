@@ -36,7 +36,7 @@ const ContactCenter = () => {
       `${import.meta.env.VITE_BACKEND_URL}/ticket/`,
       { headers: { Authorization: `Bearer ${token}` } }
     ).then(res => {
-      console.log(res.data, "ticketsabbe")
+      // console.log(res.data, "ticketsabbe")
       setTickets(res.data.tickets);
 
     }).catch(err => {
@@ -121,7 +121,7 @@ const ContactCenter = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       ).then(res => {
         const getMessage = res.data.messages
-        console.log(res.data.messages, 'message')
+        // console.log(res.data.messages, 'message')
         setMessages(getMessage)
       }
       )
@@ -144,7 +144,7 @@ const ContactCenter = () => {
         },
         { headers: { Authorization: `Bearer ${token}` } }
       ).then(res => {
-        console.log(res)
+        // console.log(res)
         setMessages(prev => [...prev, res.data.message]);
         getAllMessagesForTicketId(activeTicket._id)
         setNewMessage('');
@@ -177,7 +177,7 @@ const ContactCenter = () => {
       `${import.meta.env.VITE_BACKEND_URL}/message/lastMessage/${activeTicket._id}`,
       { headers: { Authorization: `Bearer ${token}` } }
     ).then(res => {
-      console.log(res.data.message.text, "Last message")
+      // console.log(res.data.message.text, "Last message")
       setLastMessage(prev => ({
         ...prev,
         [activeTicket._id]: res.data.message.text

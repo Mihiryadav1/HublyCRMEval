@@ -37,7 +37,7 @@ const SignIn = () => {
                         password: formData.password
                     }
                 ).then(res => {
-                    console.log(res.data.user, "Data");
+                    // console.log(res.data.user, "Data");
                     toast("Logged in successfully!", { type: "success" });
                     sessionStorage.setItem("token", res.data.token);
                     sessionStorage.setItem("role", res.data.user.role)

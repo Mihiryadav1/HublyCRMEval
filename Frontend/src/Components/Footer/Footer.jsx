@@ -1,6 +1,11 @@
 import React from 'react';
 import styles from './Footer.module.css';
-
+import { CiMail, CiTwitter } from "react-icons/ci";
+import { SlSocialLinkedin } from "react-icons/sl";
+import { FiYoutube } from "react-icons/fi";
+import { AiOutlineDiscord } from "react-icons/ai";
+import { FaFigma } from "react-icons/fa6";
+import { FaInstagram } from "react-icons/fa";
 const Footer = () => {
     const sections = {
         Product: [
@@ -48,13 +53,21 @@ const Footer = () => {
                         </ul>
                     </div>
                 ))}
+
+                <div className={styles["footer-social"]}>
+                    <span className={styles["icon"]}><CiMail /></span>
+                    <span className={styles["icon"]}><CiTwitter /></span>
+                    <span className={styles["icon"]}><FaInstagram /></span>
+                    <span className={styles["icon"]}><SlSocialLinkedin /></span>
+                    <span className={styles["icon"]}><FiYoutube /></span>
+                    <span className={styles["icon"]}><AiOutlineDiscord /></span>
+                    <span className={styles["icon"]}><FaFigma /></span>
+
+                    {/* {socialIcons.map(icon => (
+                    ))} */}
+                </div>
             </div>
-            <div className={styles["footer-social"]}>
-                {socialIcons.map(icon => (
-                    <a href="#" key={icon} className={`icon-${icon}`} aria-label={icon}></a>
-                ))}
-            </div>
-        </footer>
+        </footer >
     );
 };
 

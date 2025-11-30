@@ -45,7 +45,7 @@ const ChatSettings = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       )
       const missedChatTimer = res.data.settings.missedChatTimer
-      console.log(missedChatTimer, "Missed")
+      // console.log(missedChatTimer, "Missed")
 
     } catch (error) {
       console.log(error);

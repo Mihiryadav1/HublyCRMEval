@@ -45,7 +45,7 @@ const Team = () => {
       })
       .then((res) => {
         const team = res.data.teamMembers;
-        console.log(team);
+        // console.log(team);
         setTeam(team);
         setIsLoading(false)
       });
@@ -58,7 +58,7 @@ const Team = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         getAllTeamMembers()
       });
   };
@@ -96,7 +96,7 @@ const Team = () => {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         toast("Team member details saved!", { type: "success" });
         getAllTeamMembers()
       });
@@ -158,11 +158,8 @@ const Team = () => {
                       <button
                         className={styles["icon"]}
                         onClick={() => {
-                          console.log('clicked')
                           setSelectedId(teamMembers._id);
-                          // setSelectedId(null);
                           setIsEditing(true)
-                          // setSelectedId(teamMembers._id)
                           setEditDetails({
                             name: teamMembers.name,
                             email: teamMembers.email,

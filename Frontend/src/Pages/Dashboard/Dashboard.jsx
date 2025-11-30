@@ -21,7 +21,7 @@ const Dashboard = () => {
                     Authorization: `Bearer ${token}`
                 }
             }).then(res => {
-                console.log(res.data.tickets)
+                // console.log(res.data.tickets)
                 setTickets(res.data.tickets)
             })
 

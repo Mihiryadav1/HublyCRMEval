@@ -127,7 +127,7 @@ const Chatbot = memo(({ theme, disabledforpreview }) => {
   }, []);
 
   return (
-    <div className={styles['chatbot-container']}>
+    <div className={styles['chatbot-container']} style={{ width: "420px" }}>
       <div className={styles["chat-header"]} style={{ backgroundColor: `${headerColor}`, color: `${headerColor === "#000" || headerColor === "#33475B" || headerColor === "#036e5d" ? "white" : "black"}` }} dis>
         <div className="flex" style={{ justifyContent: "space-between", width: "100%", alignItems: "center" }}>
           <div className="flex" style={{ alignItems: "center" }}>

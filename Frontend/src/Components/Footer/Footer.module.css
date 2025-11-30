@@ -9,7 +9,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
     row-gap: 3rem;
-    /* justify-content: space-between; */
 }
 
 .footer-column {
@@ -26,44 +25,18 @@
     }
 }
 
-
+ 
 .footer-social {
-    background-color: red;
     margin-top: 30px;
     display: flex;
-    gap: 12px;
     justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
 }
 
-.footer-social a {
-    display: inline-block;
+ 
+.icon {
+    color: #adadad;
+    font-size: 1.5rem;
 }
-
-/* Placeholder icons — replace with actual SVGs or images */
-.icon-email {
-    background-image: url('/icons/email.svg');
-}
-
-.icon-linkedin {
-    background-image: url('/icons/linkedin.svg');
-}
-
-.icon-twitter {
-    background-image: url('/icons/twitter.svg');
-}
-
-.icon-youtube {
-    background-image: url('/icons/youtube.svg');
-}
-
-.icon-discord {
-    background-image: url('/icons/discord.svg');
-}
-
-.icon-github {
-    background-image: url('/icons/github.svg');
-}
-
-.icon-instagram {
-    background-image: url('/icons/instagram.svg');
-}
+ 
