@@ -1,1 +1,2 @@
-admin details
+admin details:
+

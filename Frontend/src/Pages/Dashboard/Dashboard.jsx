@@ -46,7 +46,7 @@ const Dashboard = () => {
             ticket.phone?.toLowerCase().includes(query)
         );
     });
- 
+
 
     const searchTicket = (e) => {
         const value = e.target.value;
@@ -102,7 +102,10 @@ const Dashboard = () => {
             </ul>
             <div className={styles['show-tickets']}>
                 {
-                    loading ? (<p>Loading...</p>) : filteredTickets.length === 0 ? (<p style={{ textAlign: "center", marginTop: "2rem", color: "#777", fontSize: "1.1rem" }}>
+                    loading ? (<div style={{ height: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center", gap: "2rem" }}>
+                        <img src="https://media1.giphy.com/media/v1.Y2lkPTZjMDliOTUybGoyYzJhbXR1aWNqYXZtZHo4M3Q5cXJvbzlsZzd3OGR6bXhkMHlzcCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/L05HgB2h6qICDs5Sms/200.gif" alt="" width='60px' />
+                        <span style={{ fontSize: "1.5rem" }}>Loading...</span>
+                    </div>) : filteredTickets.length === 0 ? (<p style={{ textAlign: "center", marginTop: "2rem", color: "#777", fontSize: "1.1rem" }}>
                         No tickets found
                     </p>) : (
                         filteredTickets.map(ticket => {
@@ -110,6 +113,7 @@ const Dashboard = () => {
                         })
                     )
                 }
+
             </div>
         </div>
     )

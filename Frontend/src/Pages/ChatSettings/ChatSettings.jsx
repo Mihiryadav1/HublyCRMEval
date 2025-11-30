@@ -1,16 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import styles from "./ChatSettings.module.css"
 import Chatbot from '../../Components/Chatbot/Chatbot'
 import { MdEdit } from "react-icons/md";
 import Welcome from '../../Components/ChatComponents/Welcome';
-const headerColors = ["#000", "#fff", "#33475B", "#036e5d"];
+const headerColors = ["#000", "#fff", "#33475B"];
 import axios from 'axios'
 import { toast } from 'react-toastify';
 import TimePicker from '../../Components/TimePicker/TimePicker';
 const ChatSettings = () => {
   const [selectedHeaderColor, setSelectedHeaderColor] = useState("#fff");
   const [selectedBgColor, setSelectedBgColor] = useState("#fff");
-
+  const [editFirstMessage, setEditFirstMessage] = useState(false)
+  const [editSecondMessage, setEditSecondMessage] = useState(false)
   const [chatBoxTheme, setChatBoxTheme] = useState({
     headerColor: "#fff",
     bgColor: "#fff",
@@ -29,6 +30,8 @@ const ChatSettings = () => {
     second: "00",
   });
 
+  const secondMessageRef = useRef(null);
+  const firstMessageRef = useRef(null);
 
   const handleSave = async () => {
 
@@ -44,12 +47,12 @@ const ChatSettings = () => {
         { "timerInMinutes": totalMinutes },
         { headers: { Authorization: `Bearer ${token}` } }
       )
-      const missedChatTimer = res.data.settings.missedChatTimer
+      // const missedChatTimer = res.data.settings.missedChatTimer
       // console.log(missedChatTimer, "Missed")
 
     } catch (error) {
       console.log(error);
-    }  
+    }
   };
 
   const updateLabel = (key, value) => { setChatBoxTheme(prev => ({ ...prev, [key]: value })); };
@@ -63,11 +66,23 @@ const ChatSettings = () => {
         // console.log(res.data);
         handleSave()
         toast("Chatbot settings saved!", { type: "success" });
+        setEditFirstMessage(false)
+        setEditSecondMessage(false)
       })
     } catch (error) {
       console.log(error)
     }
   }
+  useEffect(() => {
+    if (editFirstMessage) {
+      firstMessageRef.current?.focus();
+    }
+  }, [editFirstMessage]);
+  useEffect(() => {
+    if (editSecondMessage) {
+      secondMessageRef.current?.focus();
+    }
+  }, [editSecondMessage]);
 
   return (
     <>
@@ -178,20 +193,24 @@ const ChatSettings = () => {
         <div className={styles['configuration-cards']}>
           <p>Customize Message</p>
           <div>
-            <input type="text" value={chatBoxTheme.firstMessage} onChange={(e) => {
+            <input type="text" value={chatBoxTheme.firstMessage} readOnly={!editFirstMessage} ref={firstMessageRef} onChange={(e) => {
               setChatBoxTheme(prev => ({ ...prev, firstMessage: e.target.value }))
             }} style={{
               border: "0", margin: "10px 0",
-              alignItems: "center", backgroundColor: "#F6F7F5"
-            }} /> <span style={{ cursor: "pointer" }}><MdEdit /></span>
+              alignItems: "center", backgroundColor: editFirstMessage ? "#F6F7F5" : "lightgray"
+            }} /> <span style={{ cursor: "pointer" }} onClick={() => {
+              setEditFirstMessage(prev => !prev)
+            }}><MdEdit /></span>
           </div>
           <div>
-            <input type="text" value={chatBoxTheme.secondMessage} onChange={(e) => {
+            <input ref={secondMessageRef} type="text" value={chatBoxTheme.secondMessage} readOnly={!editSecondMessage} onChange={(e) => {
               setChatBoxTheme(prev => ({ ...prev, secondMessage: e.target.value }))
             }} style={{
               border: "0",
-              alignItems: "center", backgroundColor: "#F6F7F5"
-            }} /> <span style={{ cursor: "pointer" }}><MdEdit /></span>
+              alignItems: "center", backgroundColor: editSecondMessage ? "#F6F7F5" : "lightgray"
+            }} /> <span style={{ cursor: "pointer" }} onClick={() => {
+              setEditSecondMessage(prev => !prev)
+            }}><MdEdit /></span>
           </div>
         </div>
         {/* Customer Form */}
