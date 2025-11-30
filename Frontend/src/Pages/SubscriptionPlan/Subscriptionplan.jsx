@@ -5,7 +5,7 @@ const Subscriptionplan = () => {
         <div className={styles['sub-container']}>
             <div className={styles['sub-content']}>
                 <h2>We have plans for everyone!</h2>
-                <p>We started with a strong foundation, then simply built all of the sales and <br />marketing tools ALL businesses need under one platform.</p>
+                <p>We started with a strong foundation, then simply built all of the sales and <br />marketing tools all businesses need under one platform.</p>
             </div>
             <div className={styles['cards-container']}>
                 <div className={styles['sub-card']}>
@@ -27,10 +27,12 @@ const Subscriptionplan = () => {
                     <p>Best for all businesses that want to take full control of their <br /> marketing automation and track their leads, click to close.</p>
                     <div className={styles['pricing']}><span>$399</span><sub>/monthly</sub></div>
                     <ul style={{ marginTop: "10px" }}>
-                        <li style={{ display: "flex", alignItems: "center", gap: "5px", marginBottom: "20px" }}><img src="/check.svg" alt="" /><span>Unlimited Users</span></li>
+                        <li style={{ display: "flex", alignItems: "center", gap: "5px", marginBottom: "20px" }}><img src="/check.svg" alt="" /><span>Pipeline Management</span></li>
+                        <li style={{ display: "flex", alignItems: "center", gap: "5px", marginBottom: "20px" }}><img src="/check.svg" alt="" /><span>Marketing Automation Campaigns</span></li>
+                        <li style={{ display: "flex", alignItems: "center", gap: "5px", marginBottom: "20px" }}><img src="/check.svg" alt="" /><span>Live Call Transfer</span></li>
                         <li style={{ display: "flex", alignItems: "center", gap: "5px", marginBottom: "20px" }}><img src="/check.svg" alt="" /><span>GMB Messaging</span></li>
+                        <li style={{ display: "flex", alignItems: "center", gap: "5px", marginBottom: "20px" }}><img src="/check.svg" alt="" /><span>Embed-able Form Builder</span></li>
                         <li style={{ display: "flex", alignItems: "center", gap: "5px", marginBottom: "20px" }}><img src="/check.svg" alt="" /><span>Reputation Management</span></li>
-                        <li style={{ display: "flex", alignItems: "center", gap: "5px", marginBottom: "20px" }}><img src="/check.svg" alt="" /><span>GMB Call Tracking</span></li>
                         <li style={{ display: "flex", alignItems: "center", gap: "5px", marginBottom: "20px" }}><img src="/check.svg" alt="" /><span>24/7 Award Winning Support</span></li>
 
                     </ul>

@@ -23,7 +23,7 @@ const About = () => {
                     </div>
                 </div>
                 <div className={styles['detail-image']}>
-                    <img src="/aboutchart.svg" alt="" />
+                    <img src="/AboutBucket.svg" alt="" />
                 </div>
             </div>
         </div>

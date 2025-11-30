@@ -5,7 +5,7 @@ import Chatbot from '../Chatbot/Chatbot';
 import Welcome from '././Welcome';
 import { RxCross1 } from "react-icons/rx";
 const HomeScreenChatbox = () => {
-    const isMobile = window.innerWidth <= 600;
+    // const isMobile = window.innerWidth <= 600;
     const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
     const [showChatWindow, setshowChatWindow] = useState(false);
     const [theme, setTheme] = useState({
@@ -48,18 +48,18 @@ const HomeScreenChatbox = () => {
             <div style={{ marginBottom: "2rem" }}>
                 {showChatWindow && (
                     <div
-                        style={{
-                            position: isMobile ? "fixed" : "absolute",
-                            bottom: isMobile ? "0" : "50px",
-                            right: isMobile ? "0" : "5px",
-                            left: isMobile ? "0" : "auto",
-                            width: isMobile ? "100vw" : "370px",
-                            height: isMobile ? "100dvh" : "480px",
-                            zIndex: 2000,
-                            borderRadius: isMobile ? "0" : "20px",
-                            background: "white",
-                            boxShadow: "0 4px 20px rgba(0,0,0,0.2)"
-                        }}
+                        // style={{
+                        //     position: isMobile ? "fixed" : "absolute",
+                        //     bottom: isMobile ? "0" : "50px",
+                        //     right: isMobile ? "0" : "5px",
+                        //     left: isMobile ? "0" : "auto",
+                        //     width: isMobile ? "100vw" : "370px",
+                        //     height: isMobile ? "100dvh" : "480px",
+                        //     zIndex: 2000,
+                        //     borderRadius: isMobile ? "0" : "20px",
+                        //     background: "white",
+                        //     boxShadow: "0 4px 20px rgba(0,0,0,0.2)"
+                        // }}
                     >
                         <Chatbot theme={theme} />
                     </div>

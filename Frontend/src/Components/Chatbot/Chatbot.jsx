@@ -5,7 +5,6 @@ import { BiSolidSend } from "react-icons/bi"
 import axios from 'axios'
 import { toast } from 'react-toastify';
 const Chatbot = memo(({ theme, disabledforpreview }) => {
-  const isMobile = window.innerWidth <= 600;
   const { headerColor, bgColor, firstMessage, secondMessage } = theme
   const [message, setMessage] = useState('')
   const [firstMessageSent, setFirstMessageSent] = useState(false);
@@ -128,7 +127,7 @@ const Chatbot = memo(({ theme, disabledforpreview }) => {
   }, []);
 
   return (
-    <div className={styles['chatbot-container']} style={{ width: isMobile ? "100vw" : "420px" }}>
+    <div className={styles['chatbot-container']}>
       <div className={styles["chat-header"]} style={{ backgroundColor: `${headerColor}`, color: `${headerColor === "#000" || headerColor === "#33475B" || headerColor === "#036e5d" ? "white" : "black"}` }} dis>
         <div className="flex" style={{ justifyContent: "space-between", width: "100%", alignItems: "center" }}>
           <div className="flex" style={{ alignItems: "center" }}>
