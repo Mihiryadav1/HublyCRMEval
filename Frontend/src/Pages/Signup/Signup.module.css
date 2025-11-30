@@ -42,7 +42,7 @@
     & input[type="password"],
     & input[type="email"] {
         width: 100%;
-        margin-bottom: 1rem;
+        margin-bottom: 10px;
         outline: none;
         border: 1px solid var(--secondary-gray);
     }
@@ -69,4 +69,9 @@
         background-color: var(--primary-btn);
         color: var(--white);
     }
+}
+
+.error {
+    color: red;
+    margin-bottom: 10px;
 }

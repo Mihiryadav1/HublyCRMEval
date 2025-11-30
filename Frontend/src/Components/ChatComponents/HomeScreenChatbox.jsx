@@ -32,7 +32,7 @@ const HomeScreenChatbox = () => {
             );
 
             const chatBotConfig = res.data.chatConfig.chatBotConfig
-            console.log(chatBotConfig, "Theme")
+            // console.log(chatBotConfig, "Theme")
             setTheme(chatBotConfig);
 
         } catch (error) {

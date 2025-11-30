@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './SignIn.module.css'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from "axios";
 import { toast } from 'react-toastify';
 
 const SignIn = () => {
+    const [errors, setErrors] = useState({});
     const navigate = useNavigate()
-    const [formData, setFormData] = React.useState({
+    const [formData, setFormData] = useState({
         username: '',
         password: '',
     });
@@ -17,10 +18,16 @@ const SignIn = () => {
             ...prevData,
             [name]: value,
         }));
+        setErrors((prev) => ({ ...prev, [name]: "" }));
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const newErrors = {};
+
+        if (!formData.username.trim()) newErrors.username = "Username is required";
+        if (!formData.password.trim()) newErrors.password = "Password is required";
+        setErrors(newErrors);
         if (formData.username && formData.password) {
             try {
                 await axios.post(
@@ -56,10 +63,12 @@ const SignIn = () => {
                         <div className={styles['input-group']}>
                             <label htmlFor="username">Username</label>
                             <input type="text" name="username" onChange={handleChange} value={formData.username} />
+                            {errors.username && <p className={styles.error}>{errors.username}</p>}
                         </div>
                         <div className={styles['input-group']}>
                             <label htmlFor="password">Password</label>
                             <input type="password" name="password" onChange={handleChange} value={formData.password} />
+                            {errors.password && <p className={styles.error}>{errors.password}</p>}
                         </div>
                         <button type="submit" className={styles['submit-btn']}>Log In</button>
                     </form>
