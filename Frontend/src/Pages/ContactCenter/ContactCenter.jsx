@@ -170,7 +170,7 @@ const ContactCenter = () => {
     return avatars[index];
   };
 
-  const getLastMessage = async (id) => {
+  const getLastMessage = async () => {
     const token = sessionStorage.getItem("token");
     await axios.get(
       `${import.meta.env.VITE_BACKEND_URL}/message/lastMessage/${activeTicket._id}`,
