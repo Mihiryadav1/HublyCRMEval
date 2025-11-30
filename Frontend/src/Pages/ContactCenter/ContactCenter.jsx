@@ -14,7 +14,7 @@ const ContactCenter = () => {
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [selectedMember, setSelectedMember] = useState(null);
   const [loadingMessages, setLoadingMessages] = useState(false);
-  const [lastMessage, setLastMessage] = useState('')
+  const [lastMessage, setLastMessage] = useState({});
   const [messagesError, setMessagesError] = useState(false);
   const [messages, setMessages] = useState([])
   const [newMessage, setNewMessage] = useState("")
@@ -126,7 +126,7 @@ const ContactCenter = () => {
       }
       )
     } catch (error) {
-      console.log('Message fetch error', err);
+      console.log('Message fetch error', error);
       setMessagesError(true);
     }
   };
@@ -178,7 +178,10 @@ const ContactCenter = () => {
       { headers: { Authorization: `Bearer ${token}` } }
     ).then(res => {
       console.log(res.data.message.text, "Last message")
-      setLastMessage(res.data.message.text)
+      setLastMessage(prev => ({
+        ...prev,
+        [activeTicket._id]: res.data.message.text
+      }));
     })
   }
 
@@ -211,7 +214,7 @@ const ContactCenter = () => {
 
       {/* //Chats Manager - Left Section */}
       <div className={styles['chats-container']}>
-        <span>Chats</span>
+        <div style={{ marginBottom: "1.2rem",fontSize:"1.2rem" }}>Chats</div>
         <div className={styles['ticketList']}>
           {tickets.map(ticket => {
             return (
@@ -230,7 +233,7 @@ const ContactCenter = () => {
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <div style={{ color: "#3A7ABD", fontWeight: "500", fontSize: "1rem" }}>{ticket.name}</div>
                   <div className={styles.ticketLastMessage}>
-                    {lastMessage && activeTicket._id === ticket._id ? lastMessage : ""}
+                    {lastMessage[ticket._id] || "No Message Yet"}
                   </div>
                 </div>
               </div>
@@ -294,7 +297,7 @@ const ContactCenter = () => {
             })}
           </div>) : (
             <>
-              {loadingMessages && (<div style={{ height: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center", gap: "2rem" }}>
+              {loadingMessages && (<div style={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center", gap: "2rem" }}>
                 <img src="https://media1.giphy.com/media/v1.Y2lkPTZjMDliOTUybGoyYzJhbXR1aWNqYXZtZHo4M3Q5cXJvbzlsZzd3OGR6bXhkMHlzcCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/L05HgB2h6qICDs5Sms/200.gif" alt="" width='60px' />
                 <span style={{ fontSize: "1.5rem" }}>Loading...</span>
               </div>)}

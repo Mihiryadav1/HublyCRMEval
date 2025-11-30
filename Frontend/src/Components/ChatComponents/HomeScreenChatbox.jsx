@@ -10,7 +10,6 @@ const HomeScreenChatbox = () => {
     const [showChatWindow, setshowChatWindow] = useState(false);
     const [theme, setTheme] = useState({
         headerColor: "",
-        firstMessage: "",
         secondMessage: "",
         bgColor: "",
         firstMessage: "",
