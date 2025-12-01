@@ -48,6 +48,7 @@ const SignIn = () => {
                 navigate('/app');
 
             } catch (err) {
+                toast()
                 console.log(err);
             }
         }

@@ -4,6 +4,11 @@ import { IoMail } from "react-icons/io5";
 import { CiSearch } from "react-icons/ci";
 import Ticket from '../../Components/Ticket/Ticket';
 import axios from 'axios'
+import avatar1 from "/user1.jpg";
+import avatar2 from "/user2.jpg";
+import avatar3 from "/user3.jpg";
+import avatar4 from "/user4.jpg";
+import avatar5 from "/user5.jpg";
 
 const Dashboard = () => {
     // States
@@ -12,6 +17,8 @@ const Dashboard = () => {
     const [tickets, setTickets] = useState([])
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('')
+    const avatarImages = [avatar1, avatar2, avatar3, avatar4, avatar5];
+    // console.log(avatarUrl)
     // Functions
     const fetchTickets = async () => {
         try {
@@ -102,17 +109,19 @@ const Dashboard = () => {
             </ul>
             <div className={styles['show-tickets']}>
                 {
+
                     loading ? (<div style={{ height: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center", gap: "2rem" }}>
                         <img src="https://media1.giphy.com/media/v1.Y2lkPTZjMDliOTUybGoyYzJhbXR1aWNqYXZtZHo4M3Q5cXJvbzlsZzd3OGR6bXhkMHlzcCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/L05HgB2h6qICDs5Sms/200.gif" alt="" width='60px' />
                         <span style={{ fontSize: "1.5rem" }}>Loading...</span>
                     </div>) : filteredTickets.length === 0 ? (<p style={{ textAlign: "center", marginTop: "2rem", color: "#777", fontSize: "1.1rem" }}>
                         No tickets found
                     </p>) : (
-                        filteredTickets.map(ticket => {
-                            return <Ticket key={ticket._id} ticketId={ticket.ticketId} createdAt={ticket.createdAt} createdBy={ticket.name} email={ticket.email} phone={ticket.phone} status={ticket.status} />
+                        filteredTickets.map((ticket) => {
+                            return <Ticket key={ticket._id} ticketId={ticket.ticketId} createdAt={ticket.createdAt} createdBy={ticket.name} email={ticket.email} phone={ticket.phone} status={ticket.status} avatarUrl={avatarImages[Math.floor(Math.random() * avatarImages.length)]} />
                         })
                     )
                 }
+                {/* const avatarUrl = ; */}
 
             </div>
         </div>

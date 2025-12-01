@@ -248,13 +248,14 @@ const ChatSettings = () => {
                 className={styles.editableInput}
               />
               <input type="email" name='phone' placeholder='example@gmail.com' />
+              <button >Thank You</button>
             </div>
 
           </form>
-        </div>
+        </div >
 
         {/* Welcome Message */}
-        <div className={styles['configuration-cards']}>
+        < div className={styles['configuration-cards']} >
           <p>Welcome Message</p>
           <div className='flex' style={{ alignItems: "center", gap: "1rem" }}>
             <div className="flex" style={{ backgroundColor: "#F6F7F5", padding: "0.5rem", borderRadius: "10px", width: "90%", justifyContent: "space-between" }}>
@@ -269,7 +270,7 @@ const ChatSettings = () => {
             <span style={{ cursor: "pointer" }}><MdEdit /></span>
           </div>
 
-        </div>
+        </div >
 
         <div className={styles['configuration-cards']}>
           <TimePicker value={value} setValue={setValue} />

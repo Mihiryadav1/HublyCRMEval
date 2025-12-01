@@ -1,6 +1,11 @@
 import { memo } from "react"
 import styles from "./Ticket.module.css"
-const Ticket = memo(({ ticketId, createdAt, createdBy, email, phone, status }) => {
+
+
+
+
+const Ticket = memo(({ ticketId, createdAt, createdBy, email, phone, status, avatarUrl }) => {
+
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleString("en-US", {
@@ -23,9 +28,14 @@ const Ticket = memo(({ ticketId, createdAt, createdBy, email, phone, status }) =
                 </div>
             </div>
             <div className={styles['ticket-footer']}>
-                <div><b>UserName</b>: {createdBy}</div>
-                <div><b>Phone</b>: {phone}</div>
-                <div><b>Email</b>: {email}</div>
+                <div className="flex" style={{ gap: "1.2rem" }}>
+                    <img src={avatarUrl} alt="" height="40px" width="40px" style={{ borderRadius: "50%", objectFit: "cover" }} />
+                    <div>
+                        {/* <div><b>UserName</b>: {createdBy}</div> */}
+                        <div><b>Phone</b>: {phone}</div>
+                        <div><b>Email</b>: {email}</div>
+                    </div>
+                </div>
             </div>
 
         </div >
