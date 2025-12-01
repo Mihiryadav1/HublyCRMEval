@@ -395,6 +395,7 @@ const ContactCenter = () => {
           {role === "admin" && <p>Teammates</p>}
           <div> {activeTicket && role === "admin" && (
             <select
+              disabled={selectedStatus === "resolved"}
               value={activeTicket.assignedTo?._id || ""}
               onChange={(e) => {
                 setSelectedMember(e.target.value);
