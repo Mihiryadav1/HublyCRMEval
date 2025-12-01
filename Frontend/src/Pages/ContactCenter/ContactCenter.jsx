@@ -129,6 +129,9 @@ const ContactCenter = () => {
       console.log('Message fetch error', error);
       setMessagesError(true);
     }
+    finally {
+      setLoadingMessages(false);   
+    }
   };
 
   const handleSendMessage = async () => {
@@ -146,7 +149,7 @@ const ContactCenter = () => {
       ).then(res => {
         // console.log(res)
         setMessages(prev => [...prev, res.data.message]);
-        getAllMessagesForTicketId(activeTicket._id)
+        // getAllMessagesForTicketId(activeTicket._id)
         setNewMessage('');
       })
 
@@ -171,19 +174,33 @@ const ContactCenter = () => {
     return avatars[index];
   };
 
+  // const getLastMessage = async () => {
+  //   const token = sessionStorage.getItem("token");
+  //   await axios.get(
+  //     `${import.meta.env.VITE_BACKEND_URL}/message/lastMessage/${activeTicket._id}`,
+  //     { headers: { Authorization: `Bearer ${token}` } }
+  //   ).then(res => {
+  //     console.log(res.data.message, "Last message")
+  //     setLastMessage(prev => ({
+  //       ...prev,
+  //       [activeTicket._id]: res.data.message || ""
+  //     }));
+  //   })
+  // }
   const getLastMessage = async () => {
+    if (!activeTicket?._id) return;   // <-- add this
     const token = sessionStorage.getItem("token");
     await axios.get(
       `${import.meta.env.VITE_BACKEND_URL}/message/lastMessage/${activeTicket._id}`,
       { headers: { Authorization: `Bearer ${token}` } }
     ).then(res => {
-      // console.log(res.data.message.text, "Last message")
       setLastMessage(prev => ({
         ...prev,
-        [activeTicket._id]: res.data.message.text
+        [activeTicket._id]: res.data.message || ""
       }));
-    })
-  }
+    });
+  };
+
 
   useEffect(() => {
     getAllTickets();
@@ -195,6 +212,7 @@ const ContactCenter = () => {
 
   // fetch messages whenever activeTicket changes
   useEffect(() => {
+    if (!activeTicket?._id) return;
     if (activeTicket?._id) {
       getLastMessage()
       getAllMessagesForTicketId(activeTicket._id);
@@ -214,7 +232,7 @@ const ContactCenter = () => {
 
       {/* //Chats Manager - Left Section */}
       <div className={styles['chats-container']}>
-        <div style={{ marginBottom: "1.2rem",fontSize:"1.2rem" }}>Chats</div>
+        <div style={{ marginBottom: "1.2rem", fontSize: "1.2rem" }}>Chats</div>
         <div className={styles['ticketList']}>
           {tickets.map(ticket => {
             return (
@@ -233,7 +251,8 @@ const ContactCenter = () => {
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <div style={{ color: "#3A7ABD", fontWeight: "500", fontSize: "1rem" }}>{ticket.name}</div>
                   <div className={styles.ticketLastMessage}>
-                    {lastMessage[ticket._id] || "No Message Yet"}
+                    {lastMessage?.[ticket._id]?.text ?? "No Message Yet"}
+
                   </div>
                 </div>
               </div>
